@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Circle Connect</string>
+    <string name="home">Home</string>
+    <string name="network">Network</string>
+    <string name="account">Account</string>
+    <string name="messages">Messages</string>
+</resources>

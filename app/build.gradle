@@ -1,0 +1,51 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion Versions.compileSdk
+    defaultConfig {
+        applicationId "com.elyseswoverland.circleconnect"
+        minSdkVersion Versions.minSdk
+        targetSdkVersion Versions.targetSdk
+        versionCode Versions.appVersionCode
+        versionName Versions.appVersionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation Deps.kotlinStdLib
+    implementation Deps.support
+    implementation Deps.coreKtx
+    implementation Deps.design
+    implementation Deps.navFragment
+    implementation Deps.navUi
+    implementation Deps.navFragmentKtx
+    implementation Deps.navUiKtx
+    implementation Deps.constraintLayout
+    implementation Deps.maps
+    implementation Deps.location
+    implementation Deps.dagger
+    kapt Deps.daggerCompiler
+    implementation Deps.javaxAnnotation
+    implementation Deps.rxAndroid
+    implementation Deps.rxJava
+    implementation Deps.okHttp
+    implementation Deps.okHttpLoggingInterceptor
+    implementation Deps.retrofit
+    implementation Deps.gsonConverter
+    implementation Deps.jacksonConverter
+    implementation Deps.rxJavaAdapter
+    implementation Deps.picasso
+    testImplementation Deps.jUnit
+    androidTestImplementation Deps.testRunner
+    androidTestImplementation Deps.espresso
+}
