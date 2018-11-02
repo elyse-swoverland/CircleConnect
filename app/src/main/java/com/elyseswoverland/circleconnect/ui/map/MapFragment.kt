@@ -45,7 +45,6 @@ class MapFragment : Fragment(), OnMapReadyCallback,
         return rootView
     }
 
-
     override fun onResume() {
         super.onResume()
         mMapView.onResume()
@@ -109,7 +108,6 @@ class MapFragment : Fragment(), OnMapReadyCallback,
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 10f))
             }
         }
-
     }
 
     companion object {
