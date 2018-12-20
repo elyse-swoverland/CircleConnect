@@ -10,10 +10,10 @@ object Versions {
     const val appVersionName = "1.0.0"
 
     // Android Gradle Plugin
-    const val gradlePlugin = "3.3.0-beta01"
+    const val gradlePlugin = "3.3.0-rc02"
 
     // Kotlin
-    const val kotlin = "1.2.71"
+    const val kotlin = "1.3.11"
 
     // Support
     const val androidx = "1.0.0"
