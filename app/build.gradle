@@ -14,11 +14,33 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            buildConfigField "String", "SERVER_URL", '"http://thecircleconnect-test.northcentralus.cloudapp.azure.com"'
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    flavorDimensions "circleconnect"
+
+    productFlavors {
+        loanServicing {
+            dimension "circleconnect"
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+androidExtensions {
+    experimental = true
+}
+
+kapt {
+    generateStubs = true
 }
 
 dependencies {

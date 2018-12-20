@@ -3,18 +3,24 @@ package com.elyseswoverland.circleconnect.ui.map
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.Fragment
 import com.elyseswoverland.circleconnect.R
+import com.elyseswoverland.circleconnect.dagger.Dagger
+import com.elyseswoverland.circleconnect.models.Merchant
+import com.elyseswoverland.circleconnect.network.CircleConnectApiManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import rx.android.schedulers.AndroidSchedulers
+import javax.inject.Inject
 
 
 class MapFragment : Fragment(), OnMapReadyCallback,
@@ -24,6 +30,13 @@ class MapFragment : Fragment(), OnMapReadyCallback,
     private lateinit var mMapView: MapView
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var lastLocation: Location
+
+    @Inject lateinit var circleConnectApiManager: CircleConnectApiManager
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Dagger.getInstance().component().inject(this)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_map, container, false)
@@ -48,6 +61,18 @@ class MapFragment : Fragment(), OnMapReadyCallback,
     override fun onResume() {
         super.onResume()
         mMapView.onResume()
+
+        circleConnectApiManager.getMerchants(0, 39.8717418, -86.141082, 1)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onGetMerchantsSuccess, this::onGetMerchantsFailure)
+    }
+
+    private fun onGetMerchantsSuccess(merchants: ArrayList<Merchant>) {
+        Log.d("TAG", "Success!")
+    }
+
+    private fun onGetMerchantsFailure(throwable: Throwable) {
+        Log.d("TAG", "Fail :(")
     }
 
     override fun onPause() {

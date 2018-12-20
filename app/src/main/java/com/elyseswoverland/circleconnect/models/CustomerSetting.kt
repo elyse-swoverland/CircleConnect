@@ -1,4 +1,4 @@
-package com.elyseswoverland.circleconnect.network.models
+package com.elyseswoverland.circleconnect.models
 
 import com.google.gson.annotations.SerializedName
 

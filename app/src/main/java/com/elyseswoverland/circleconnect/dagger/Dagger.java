@@ -1,6 +1,6 @@
 package com.elyseswoverland.circleconnect.dagger;
 
-import com.elyseswoverland.circleconnect.CircleConnectApplication;
+import com.elyseswoverland.circleconnect.app.CircleConnectApplication;
 
 public final class Dagger {
 

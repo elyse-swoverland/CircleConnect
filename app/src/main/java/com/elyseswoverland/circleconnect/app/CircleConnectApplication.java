@@ -1,4 +1,4 @@
-package com.elyseswoverland.circleconnect;
+package com.elyseswoverland.circleconnect.app;
 
 import android.app.Application;
 

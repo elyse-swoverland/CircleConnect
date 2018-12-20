@@ -1,22 +1,22 @@
 package com.elyseswoverland.circleconnect.network;
 
-import com.elyseswoverland.circleconnect.network.models.CustomerSetting;
-import com.elyseswoverland.circleconnect.network.models.Merchants;
-import com.elyseswoverland.circleconnect.network.models.Session;
-import com.elyseswoverland.circleconnect.network.models.SessionRequest;
-import com.elyseswoverland.circleconnect.network.models.SortPreferenceType;
+import com.elyseswoverland.circleconnect.models.CustomerSetting;
+import com.elyseswoverland.circleconnect.models.Merchant;
+import com.elyseswoverland.circleconnect.models.Session;
+import com.elyseswoverland.circleconnect.models.SessionRequest;
+import com.elyseswoverland.circleconnect.models.SortPreferenceType;
 
-import java.math.BigDecimal;
+import java.util.ArrayList;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 
 public interface CircleConnectApi {
     @POST("/api/Session")
-    Observable<Session> getSession(@Body SessionRequest sessionRequest);
+    Observable<Session> startSession(@Body SessionRequest sessionRequest);
 
     @GET("/api/SortPreference")
     Observable<SortPreferenceType> getSortPreference();
@@ -27,9 +27,9 @@ public interface CircleConnectApi {
     @POST("/api/CustomerSetting")
     Observable<Void> postCustomerSetting(@Body CustomerSetting customerSetting);
 
-    @GET("/api/Merchants{customerId}{latitude}{longitude}{radius}")
-    Observable<Merchants> getMerchants(@Path("customerId") int customerId,
-                                       @Path("latitude")BigDecimal latitude,
-                                       @Path("longitude") BigDecimal longitude,
-                                       @Path("radius") int radius);
+    @GET("/api/Merchants")
+    Observable<ArrayList<Merchant>> getMerchants(@Query("customerId") int customerId,
+                                                 @Query("latitude") double latitude,
+                                                 @Query("longitude") double longitude,
+                                                 @Query("radius") int radius);
 }

@@ -1,12 +1,11 @@
-package com.elyseswoverland.circleconnect.network.models
+package com.elyseswoverland.circleconnect.models
 
 import com.google.gson.annotations.SerializedName
-import java.math.BigDecimal
 
 data class MerchLocation(@SerializedName("Latitude")
-                         val latitude: BigDecimal,
+                         val latitude: Double,
                          @SerializedName("Longitude")
-                         val longitude: BigDecimal,
+                         val longitude: Double,
                          @SerializedName("GeographyPoint")
                          val geographyPoint: Int) {
 }
