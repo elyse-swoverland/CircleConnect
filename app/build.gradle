@@ -68,6 +68,7 @@ dependencies {
     implementation Deps.jacksonConverter
     implementation Deps.rxJavaAdapter
     implementation Deps.picasso
+    implementation Deps.bottomSheet
     testImplementation Deps.jUnit
     androidTestImplementation Deps.testRunner
     androidTestImplementation Deps.espresso

@@ -10,7 +10,7 @@ object Versions {
     const val appVersionName = "1.0.0"
 
     // Android Gradle Plugin
-    const val gradlePlugin = "3.3.0-rc02"
+    const val gradlePlugin = "3.3.0-rc03"
 
     // Kotlin
     const val kotlin = "1.3.11"
@@ -49,6 +49,9 @@ object Versions {
 
     // Picasso
     const val picasso = "2.5.2"
+
+    // Bottom Sheet
+    const val bottomSheet = "3.4.0"
 
     // Testing
     const val jUnit = "4.12"
@@ -114,6 +117,9 @@ object Deps {
 
     // Picasso
     const val picasso = "com.squareup.picasso:picasso:${Versions.picasso}"
+
+    // Bottom Sheet
+    const val bottomSheet = "com.sothree.slidinguppanel:library:${Versions.bottomSheet}"
 
     // Testing
     const val jUnit = "junit:junit:${Versions.jUnit}"

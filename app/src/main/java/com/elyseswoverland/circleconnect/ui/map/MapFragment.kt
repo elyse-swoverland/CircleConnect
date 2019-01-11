@@ -23,6 +23,8 @@ import rx.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 
 
+
+
 class MapFragment : Fragment(), OnMapReadyCallback,
         GoogleMap.OnMarkerClickListener {
 
@@ -56,6 +58,10 @@ class MapFragment : Fragment(), OnMapReadyCallback,
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
 
         return rootView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onResume() {
