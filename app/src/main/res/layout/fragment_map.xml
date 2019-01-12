@@ -9,11 +9,11 @@
     sothree:umanoPanelHeight="68dp"
     sothree:umanoShadowHeight="4dp">
 
+    <!-- MAIN CONTENT -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- TODO: Update blank fragment layout -->
         <RelativeLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
@@ -27,11 +27,10 @@
 
     </FrameLayout>
 
-    <TextView
+    <!-- SLIDING LAYOUT -->
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center|top"
-        android:text="The Awesome Sliding Up Panel"
-        android:textSize="16sp" />
+        android:id="@+id/recyclerView"/>
 
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>

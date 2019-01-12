@@ -1,5 +1,6 @@
 package com.elyseswoverland.circleconnect.ui.map
 
+import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -9,6 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.elyseswoverland.circleconnect.R
 import com.elyseswoverland.circleconnect.dagger.Dagger
 import com.elyseswoverland.circleconnect.models.Merchant
@@ -19,6 +23,9 @@ import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.Section
+import kotlinx.android.synthetic.main.fragment_map.*
 import rx.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 
@@ -32,6 +39,8 @@ class MapFragment : Fragment(), OnMapReadyCallback,
     private lateinit var mMapView: MapView
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var lastLocation: Location
+    private lateinit var ctx: Context
+    private val groupAdapter = GroupAdapter<com.xwray.groupie.ViewHolder>()
 
     @Inject lateinit var circleConnectApiManager: CircleConnectApiManager
 
@@ -62,6 +71,9 @@ class MapFragment : Fragment(), OnMapReadyCallback,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setUpRecyclerView()
+        ctx = context ?: return
     }
 
     override fun onResume() {
@@ -74,11 +86,24 @@ class MapFragment : Fragment(), OnMapReadyCallback,
     }
 
     private fun onGetMerchantsSuccess(merchants: ArrayList<Merchant>) {
-        Log.d("TAG", "Success!")
+        groupAdapter.add(Section().apply {
+            merchants.forEachIndexed { _, merchant ->
+                add(MerchantItem(ctx, merchant))
+            }
+        })
+        recyclerView.adapter = groupAdapter
     }
 
     private fun onGetMerchantsFailure(throwable: Throwable) {
         Log.d("TAG", "Fail :(")
+    }
+
+    private fun setUpRecyclerView() {
+        val lm = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+        recyclerView.layoutManager = lm
+
+        val dividerItemDecoration = DividerItemDecoration(recyclerView.context, lm.orientation)
+        recyclerView.addItemDecoration(dividerItemDecoration)
     }
 
     override fun onPause() {

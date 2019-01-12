@@ -53,6 +53,9 @@ object Versions {
     // Bottom Sheet
     const val bottomSheet = "3.4.0"
 
+    // Groupie
+    const val groupie = "2.1.0"
+
     // Testing
     const val jUnit = "4.12"
     const val testRunner = "1.1.0"
@@ -120,6 +123,10 @@ object Deps {
 
     // Bottom Sheet
     const val bottomSheet = "com.sothree.slidinguppanel:library:${Versions.bottomSheet}"
+
+    // Groupie
+    const val groupie = "com.xwray:groupie:${Versions.groupie}"
+    const val groupieKotlinExtensions = "com.xwray:groupie-kotlin-android-extensions:${Versions.groupie}"
 
     // Testing
     const val jUnit = "junit:junit:${Versions.jUnit}"

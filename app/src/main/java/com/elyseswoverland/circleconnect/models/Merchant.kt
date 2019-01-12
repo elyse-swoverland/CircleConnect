@@ -10,6 +10,8 @@ data class Merchant(@SerializedName("MerchId")
                     val merchName: String,
                     @SerializedName("Desc")
                     val description: String,
+                    @SerializedName("Address")
+                    val address: String?,
                     @SerializedName("City")
                     val city: String,
                     @SerializedName("StateCd")

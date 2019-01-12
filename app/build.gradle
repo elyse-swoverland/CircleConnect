@@ -69,6 +69,8 @@ dependencies {
     implementation Deps.rxJavaAdapter
     implementation Deps.picasso
     implementation Deps.bottomSheet
+    implementation Deps.groupie
+    implementation Deps.groupieKotlinExtensions
     testImplementation Deps.jUnit
     androidTestImplementation Deps.testRunner
     androidTestImplementation Deps.espresso
