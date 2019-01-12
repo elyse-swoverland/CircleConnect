@@ -8,10 +8,10 @@
         android:title="@string/home"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_network"
+        android:id="@+id/action_favorites"
         android:enabled="true"
-        android:icon="@drawable/outline_group_black_36dp"
-        android:title="@string/network"
+        android:icon="@drawable/outline_favorite_border_black_36dp"
+        android:title="@string/favorites"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_messages"
