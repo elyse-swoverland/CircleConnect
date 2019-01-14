@@ -41,6 +41,6 @@
         android:layout_marginEnd="16dp"
         android:textColor="@color/darker_red"
         android:textSize="16sp"
-        android:text="12.12"/>
+        tools:text="12.12"/>
 
 </RelativeLayout>

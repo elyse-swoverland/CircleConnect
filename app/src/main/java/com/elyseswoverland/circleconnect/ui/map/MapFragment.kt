@@ -101,7 +101,6 @@ class MapFragment : Fragment(), OnMapReadyCallback,
     private fun setUpRecyclerView() {
         val lm = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         recyclerView.layoutManager = lm
-
         val dividerItemDecoration = DividerItemDecoration(recyclerView.context, lm.orientation)
         recyclerView.addItemDecoration(dividerItemDecoration)
     }
