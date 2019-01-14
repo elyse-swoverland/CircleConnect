@@ -22,6 +22,7 @@ class MerchantItem constructor(private val context: Context,
                 merchant.state,
                 merchant.zipCode)
 
+        // TODO: - Clean up
         val latLngA = LatLng(39.875605, -86.082856)
         val latLngB = LatLng(merchant.merchLocation.latitude, merchant.merchLocation.longitude)
 

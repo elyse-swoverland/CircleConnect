@@ -2,6 +2,7 @@ package com.elyseswoverland.circleconnect.ui.map
 
 import android.content.Context
 import android.content.pm.PackageManager
+import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
@@ -27,6 +28,7 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Section
 import kotlinx.android.synthetic.main.fragment_map.*
 import rx.android.schedulers.AndroidSchedulers
+import java.util.*
 import javax.inject.Inject
 
 
@@ -86,6 +88,7 @@ class MapFragment : Fragment(), OnMapReadyCallback,
     }
 
     private fun onGetMerchantsSuccess(merchants: ArrayList<Merchant>) {
+        groupAdapter.clear()
         groupAdapter.add(Section().apply {
             merchants.forEachIndexed { _, merchant ->
                 add(MerchantItem(ctx, merchant))
@@ -161,6 +164,16 @@ class MapFragment : Fragment(), OnMapReadyCallback,
                 lastLocation = location
                 val currentLatLng = LatLng(location.latitude, location.longitude)
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 10f))
+
+                val geocoder = Geocoder(ctx, Locale.getDefault())
+                val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                val address = addresses[0]
+                currentLocationAddress.text = String.format(getString(R.string.current_location_address),
+                        address.subThoroughfare,
+                        address.thoroughfare,
+                        address.locality,
+                        address.adminArea,
+                        address.postalCode)
             }
         }
     }
