@@ -40,8 +40,8 @@ class MapFragment : Fragment(), OnMapReadyCallback,
     private lateinit var mMap: GoogleMap
     private lateinit var mMapView: MapView
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var lastLocation: Location
     private lateinit var ctx: Context
+    private var lastLocation: Location? = null
     private val groupAdapter = GroupAdapter<com.xwray.groupie.ViewHolder>()
 
     @Inject lateinit var circleConnectApiManager: CircleConnectApiManager
@@ -82,19 +82,22 @@ class MapFragment : Fragment(), OnMapReadyCallback,
         super.onResume()
         mMapView.onResume()
 
-        circleConnectApiManager.getMerchants(0, 39.8717418, -86.141082, 1)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onGetMerchantsSuccess, this::onGetMerchantsFailure)
+//        circleConnectApiManager.getMerchants(0, 39.8717418, -86.141082, 1)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(this::onGetMerchantsSuccess, this::onGetMerchantsFailure)
     }
 
     private fun onGetMerchantsSuccess(merchants: ArrayList<Merchant>) {
         groupAdapter.clear()
         groupAdapter.add(Section().apply {
             merchants.forEachIndexed { _, merchant ->
-                add(MerchantItem(ctx, merchant))
+                add(MerchantItem(ctx, merchant, lastLocation))
             }
         })
         recyclerView.adapter = groupAdapter
+
+        val bierBrewery = LatLng(39.875605, -86.082856)
+        mMap.addMarker(MarkerOptions().position(bierBrewery).title("Bier Brewery"))
     }
 
     private fun onGetMerchantsFailure(throwable: Throwable) {
@@ -126,9 +129,8 @@ class MapFragment : Fragment(), OnMapReadyCallback,
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         // Add a marker and move the camera
-        val bierBrewery = LatLng(39.875605, -86.082856)
-        mMap.addMarker(MarkerOptions().position(bierBrewery).title("Bier Brewery"))
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(bierBrewery, 10f))
+
+//        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(bierBrewery, 10f))
 //        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 10f))
 
         setUpMap()
@@ -161,6 +163,11 @@ class MapFragment : Fragment(), OnMapReadyCallback,
         fusedLocationClient.lastLocation.addOnSuccessListener(activity!!) { location ->
             // Got last known location. In some rare situations this can be null.
             if (location != null) {
+                circleConnectApiManager.getMerchants(0, location.latitude,
+                        location.longitude, 20)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(this::onGetMerchantsSuccess, this::onGetMerchantsFailure)
+
                 lastLocation = location
                 val currentLatLng = LatLng(location.latitude, location.longitude)
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 10f))
