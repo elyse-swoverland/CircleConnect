@@ -81,10 +81,6 @@ class MapFragment : Fragment(), OnMapReadyCallback,
     override fun onResume() {
         super.onResume()
         mMapView.onResume()
-
-//        circleConnectApiManager.getMerchants(0, 39.8717418, -86.141082, 1)
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(this::onGetMerchantsSuccess, this::onGetMerchantsFailure)
     }
 
     private fun onGetMerchantsSuccess(merchants: ArrayList<Merchant>) {
@@ -92,12 +88,12 @@ class MapFragment : Fragment(), OnMapReadyCallback,
         groupAdapter.add(Section().apply {
             merchants.forEachIndexed { _, merchant ->
                 add(MerchantItem(ctx, merchant, lastLocation))
+                mMap.addMarker(MarkerOptions().position(LatLng(merchant.merchLocation.latitude,
+                        merchant.merchLocation.longitude)).title(merchant.merchName))
             }
         })
         recyclerView.adapter = groupAdapter
 
-        val bierBrewery = LatLng(39.875605, -86.082856)
-        mMap.addMarker(MarkerOptions().position(bierBrewery).title("Bier Brewery"))
     }
 
     private fun onGetMerchantsFailure(throwable: Throwable) {
@@ -128,10 +124,6 @@ class MapFragment : Fragment(), OnMapReadyCallback,
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        // Add a marker and move the camera
-
-//        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(bierBrewery, 10f))
-//        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 10f))
 
         setUpMap()
     }
