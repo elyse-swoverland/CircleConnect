@@ -1,9 +1,12 @@
 package com.elyseswoverland.circleconnect.ui.map;
 
-public interface MerchantListCallback {
-    void moveMap();
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 
-    void showInfoWindow();
+public interface MerchantListCallback {
+    void moveMap(LatLng latLng);
+
+    void showInfoWindow(Marker marker);
 
     void collapseSlidingPanel();
 }

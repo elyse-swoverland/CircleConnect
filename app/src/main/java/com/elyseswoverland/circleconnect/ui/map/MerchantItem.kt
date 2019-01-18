@@ -5,7 +5,6 @@ import android.location.Location
 import android.view.View
 import com.elyseswoverland.circleconnect.R
 import com.elyseswoverland.circleconnect.models.Merchant
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
@@ -19,8 +18,7 @@ class MerchantItem constructor(private val context: Context,
                                private val merchant: Merchant,
                                private val lastLocation: Location?,
                                private val m: Marker,
-                               private val map: GoogleMap,
-                               private val slidingPanel: SlidingUpPanelLayout) : Item() {
+                               private val callback: MerchantListCallback) : Item() {
 
     override fun getLayout(): Int = com.elyseswoverland.circleconnect.R.layout.item_merchant
 
@@ -53,9 +51,9 @@ class MerchantItem constructor(private val context: Context,
 
         viewHolder.rootLayout.setOnClickListener {
             val latLngB = LatLng(merchant.merchLocation.latitude, merchant.merchLocation.longitude)
-            m.showInfoWindow()
-            map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLngB, 20f))
-            slidingPanel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+            callback.moveMap(latLngB)
+            callback.showInfoWindow(m)
+            callback.collapseSlidingPanel()
         }
     }
 }

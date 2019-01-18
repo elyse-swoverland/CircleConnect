@@ -25,6 +25,7 @@ import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Section
 import kotlinx.android.synthetic.main.fragment_map.*
@@ -36,13 +37,14 @@ import javax.inject.Inject
 
 
 class MapFragment : Fragment(), OnMapReadyCallback,
-        GoogleMap.OnMarkerClickListener {
+        GoogleMap.OnMarkerClickListener, MerchantListCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var mMapView: MapView
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var ctx: Context
     private var lastLocation: Location? = null
+    private var callback: MerchantListCallback? = null
     private val groupAdapter = GroupAdapter<com.xwray.groupie.ViewHolder>()
 
     @Inject lateinit var circleConnectApiManager: CircleConnectApiManager
@@ -77,6 +79,8 @@ class MapFragment : Fragment(), OnMapReadyCallback,
 
         setUpRecyclerView()
         ctx = context ?: return
+
+        this.callback = this
     }
 
     override fun onResume() {
@@ -92,7 +96,7 @@ class MapFragment : Fragment(), OnMapReadyCallback,
                 mMap.setInfoWindowAdapter(customInfoWindow)
                 val m = mMap.addMarker(MarkerOptions().position(LatLng(merchant.merchLocation.latitude,
                         merchant.merchLocation.longitude)).title(merchant.merchName))
-                add(MerchantItem(ctx, merchant, lastLocation, m, mMap, sliding_layout))
+                add(MerchantItem(ctx, merchant, lastLocation, m, callback!!))
 //                m.showInfoWindow()
             }
         })
@@ -179,6 +183,18 @@ class MapFragment : Fragment(), OnMapReadyCallback,
                         address.postalCode)
             }
         }
+    }
+
+    override fun moveMap(latLng: LatLng?) {
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18f))
+    }
+
+    override fun showInfoWindow(marker: Marker?) {
+        marker?.showInfoWindow()
+    }
+
+    override fun collapseSlidingPanel() {
+        sliding_layout.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
     }
 
     companion object {
