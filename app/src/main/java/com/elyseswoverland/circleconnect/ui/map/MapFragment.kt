@@ -18,6 +18,7 @@ import com.elyseswoverland.circleconnect.R
 import com.elyseswoverland.circleconnect.dagger.Dagger
 import com.elyseswoverland.circleconnect.models.Merchant
 import com.elyseswoverland.circleconnect.network.CircleConnectApiManager
+import com.elyseswoverland.circleconnect.ui.util.CustomInfoWindow
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
@@ -88,8 +89,11 @@ class MapFragment : Fragment(), OnMapReadyCallback,
         groupAdapter.add(Section().apply {
             merchants.forEachIndexed { _, merchant ->
                 add(MerchantItem(ctx, merchant, lastLocation))
+                val customInfoWindow = CustomInfoWindow(ctx)
+                mMap.setInfoWindowAdapter(customInfoWindow)
                 mMap.addMarker(MarkerOptions().position(LatLng(merchant.merchLocation.latitude,
                         merchant.merchLocation.longitude)).title(merchant.merchName))
+//                m.showInfoWindow()
             }
         })
         recyclerView.adapter = groupAdapter
