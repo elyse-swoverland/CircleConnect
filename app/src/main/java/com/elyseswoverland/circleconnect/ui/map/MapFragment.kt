@@ -88,11 +88,11 @@ class MapFragment : Fragment(), OnMapReadyCallback,
         groupAdapter.clear()
         groupAdapter.add(Section().apply {
             merchants.forEachIndexed { _, merchant ->
-                add(MerchantItem(ctx, merchant, lastLocation))
                 val customInfoWindow = CustomInfoWindow(ctx)
                 mMap.setInfoWindowAdapter(customInfoWindow)
-                mMap.addMarker(MarkerOptions().position(LatLng(merchant.merchLocation.latitude,
+                val m = mMap.addMarker(MarkerOptions().position(LatLng(merchant.merchLocation.latitude,
                         merchant.merchLocation.longitude)).title(merchant.merchName))
+                add(MerchantItem(ctx, merchant, lastLocation, m, mMap, sliding_layout))
 //                m.showInfoWindow()
             }
         })
