@@ -3,17 +3,24 @@ package com.elyseswoverland.circleconnect.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.elyseswoverland.circleconnect.R
+import com.elyseswoverland.circleconnect.dagger.Dagger
+import com.elyseswoverland.circleconnect.persistence.SessionStorage
 import com.elyseswoverland.circleconnect.ui.account.AccountFragment
 import com.elyseswoverland.circleconnect.ui.favorites.FavoritesFragment
+import com.elyseswoverland.circleconnect.ui.login.LoginFragment
 import com.elyseswoverland.circleconnect.ui.map.MapFragment
 import com.elyseswoverland.circleconnect.ui.messages.MessagesFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity() {
 
+    @Inject lateinit var sessionStorage: SessionStorage
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Dagger.getInstance().component().inject(this)
         setContentView(R.layout.activity_main)
 
         val fragmentManager = supportFragmentManager
@@ -33,7 +40,11 @@ class MainActivity : AppCompatActivity() {
                 R.id.action_favorites -> {
                     val fragmentManager = supportFragmentManager
                     val fragmentTransaction = fragmentManager.beginTransaction()
-                    fragmentTransaction.replace(R.id.content, FavoritesFragment())
+                    if (sessionStorage.hasToken()) {
+                        fragmentTransaction.replace(R.id.content, FavoritesFragment())
+                    } else {
+                        fragmentTransaction.replace(R.id.content, LoginFragment())
+                    }
                     fragmentTransaction.commit()
                     true
                 }

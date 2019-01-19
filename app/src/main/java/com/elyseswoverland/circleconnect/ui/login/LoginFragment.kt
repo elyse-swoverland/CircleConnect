@@ -2,9 +2,11 @@ package com.elyseswoverland.circleconnect.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -27,12 +29,13 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        loginButton.setReadPermissions(Arrays.asList(EMAIL))
+        loginButton.setReadPermissions(Arrays.asList(EMAIL, PUBLIC_PROFILE))
         loginButton.fragment = this
 
         loginButton.registerCallback(callbackManager, object: FacebookCallback<LoginResult?> {
             override fun onSuccess(result: LoginResult?) {
-
+                Toast.makeText(context, "FB login succeeded!", Toast.LENGTH_LONG).show()
+                Log.d("TAG", "Access token: " + result!!.accessToken.token)
             }
 
             override fun onCancel() {
@@ -40,7 +43,7 @@ class LoginFragment : Fragment() {
             }
 
             override fun onError(error: FacebookException?) {
-
+                error!!.printStackTrace()
             }
         })
     }
@@ -52,5 +55,6 @@ class LoginFragment : Fragment() {
 
     companion object {
         private const val EMAIL = "email"
+        private const val PUBLIC_PROFILE = "public_profile"
     }
 }
