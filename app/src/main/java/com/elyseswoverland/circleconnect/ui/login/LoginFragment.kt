@@ -6,11 +6,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
+import com.facebook.GraphRequest
 import com.facebook.login.LoginResult
 import kotlinx.android.synthetic.main.fragment_login.*
 import java.util.*
@@ -34,8 +34,7 @@ class LoginFragment : Fragment() {
 
         loginButton.registerCallback(callbackManager, object: FacebookCallback<LoginResult?> {
             override fun onSuccess(result: LoginResult?) {
-                Toast.makeText(context, "FB login succeeded!", Toast.LENGTH_LONG).show()
-                Log.d("TAG", "Access token: " + result!!.accessToken.token)
+                setFacebookData(result!!)
             }
 
             override fun onCancel() {
@@ -46,6 +45,23 @@ class LoginFragment : Fragment() {
                 error!!.printStackTrace()
             }
         })
+    }
+
+    private fun setFacebookData(loginResult: LoginResult) {
+        val graphRequest = GraphRequest.newMeRequest(loginResult.accessToken) { `object`, response ->
+            val email = response.jsonObject.getString("email")
+            val name = response.jsonObject.getString("name")
+            val firstName = response.jsonObject.getString("first_name")
+            val lastName = response.jsonObject.getString("last_name")
+
+            Log.d("TAG", "name: $name")
+            Log.d("TAG", "email: $email")
+        }
+
+        val parameters = Bundle()
+        parameters.putString("fields", "id, name, first_name, last_name, email, age_range, gender, locale, timezone, updated_time, verified")
+        graphRequest.parameters = parameters
+        graphRequest.executeAsync()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
