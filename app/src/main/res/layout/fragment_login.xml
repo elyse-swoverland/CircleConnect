@@ -5,12 +5,19 @@
 
 
     <com.facebook.login.widget.LoginButton
-        android:id="@+id/loginButton"
+        android:id="@+id/facebookLoginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="30dp"
+        android:layout_centerHorizontal="true"/>
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/googleLoginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/facebookLoginButton"
         android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

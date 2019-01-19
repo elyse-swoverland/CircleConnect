@@ -57,7 +57,10 @@ object Versions {
     const val groupie = "2.1.0"
 
     // Facebook
-    const val facebook ="4.39.0"
+    const val facebook = "4.39.0"
+
+    // Google Login
+    const val googleLogin = "16.0.1"
 
     // Testing
     const val jUnit = "4.12"
@@ -131,8 +134,11 @@ object Deps {
     const val groupie = "com.xwray:groupie:${Versions.groupie}"
     const val groupieKotlinExtensions = "com.xwray:groupie-kotlin-android-extensions:${Versions.groupie}"
 
-    // Facebook
+    // Facebook Login
     const val facebook = "com.facebook.android:facebook-android-sdk:${Versions.facebook}"
+
+    // Google Login
+    const val googleLogin = "com.google.android.gms:play-services-auth:${Versions.googleLogin}"
 
     // Testing
     const val jUnit = "junit:junit:${Versions.jUnit}"

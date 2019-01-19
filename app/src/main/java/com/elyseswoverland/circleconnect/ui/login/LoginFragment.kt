@@ -1,5 +1,6 @@
 package com.elyseswoverland.circleconnect.ui.login
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -12,13 +13,24 @@ import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.GraphRequest
 import com.facebook.login.LoginResult
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.SignInButton
+import com.google.android.gms.common.api.ApiException
 import kotlinx.android.synthetic.main.fragment_login.*
 import java.util.*
 
 
+
+
+
+
 class LoginFragment : Fragment() {
     private lateinit var callbackManager: CallbackManager
-
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
+    private lateinit var ctx: Context
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(com.elyseswoverland.circleconnect.R.layout.fragment_login, container, false)
@@ -29,10 +41,12 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        loginButton.setReadPermissions(Arrays.asList(EMAIL, PUBLIC_PROFILE))
-        loginButton.fragment = this
+        ctx = context ?: return
 
-        loginButton.registerCallback(callbackManager, object: FacebookCallback<LoginResult?> {
+        // Facebook
+        facebookLoginButton.setReadPermissions(Arrays.asList(EMAIL, PUBLIC_PROFILE))
+        facebookLoginButton.fragment = this
+        facebookLoginButton.registerCallback(callbackManager, object: FacebookCallback<LoginResult?> {
             override fun onSuccess(result: LoginResult?) {
                 setFacebookData(result!!)
             }
@@ -45,6 +59,17 @@ class LoginFragment : Fragment() {
                 error!!.printStackTrace()
             }
         })
+
+        // Google
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build()
+        mGoogleSignInClient = GoogleSignIn.getClient(ctx, gso)
+        googleLoginButton.setSize(SignInButton.SIZE_STANDARD)
+        googleLoginButton.setOnClickListener {
+            val signInIntent = mGoogleSignInClient.signInIntent
+            startActivityForResult(signInIntent, 69)
+        }
     }
 
     private fun setFacebookData(loginResult: LoginResult) {
@@ -64,8 +89,29 @@ class LoginFragment : Fragment() {
         graphRequest.executeAsync()
     }
 
+    private fun handleSignInResult(completedTask: com.google.android.gms.tasks.Task<GoogleSignInAccount>) {
+        try {
+            val account = completedTask.getResult(ApiException::class.java)
+
+            // Signed in successfully, show authenticated UI.
+//            updateUI(account)
+            Log.d("TAG", "Google Login Success: " + account!!.displayName)
+        } catch (e: ApiException) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.w("TAG", "signInResult:failed code=" + e.statusCode)
+//            updateUI(null)
+        }
+
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 69) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            handleSignInResult(task)
+        } else {
+            callbackManager.onActivityResult(requestCode, resultCode, data)
+        }
         super.onActivityResult(requestCode, resultCode, data)
     }
 

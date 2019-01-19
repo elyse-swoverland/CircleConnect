@@ -72,7 +72,7 @@ dependencies {
     implementation Deps.groupie
     implementation Deps.groupieKotlinExtensions
     implementation Deps.facebook
-
+    implementation Deps.googleLogin
     testImplementation Deps.jUnit
     androidTestImplementation Deps.testRunner
     androidTestImplementation Deps.espresso
