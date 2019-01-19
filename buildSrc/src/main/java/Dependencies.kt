@@ -56,6 +56,9 @@ object Versions {
     // Groupie
     const val groupie = "2.1.0"
 
+    // Facebook
+    const val facebook ="4.39.0"
+
     // Testing
     const val jUnit = "4.12"
     const val testRunner = "1.1.0"
@@ -127,6 +130,9 @@ object Deps {
     // Groupie
     const val groupie = "com.xwray:groupie:${Versions.groupie}"
     const val groupieKotlinExtensions = "com.xwray:groupie-kotlin-android-extensions:${Versions.groupie}"
+
+    // Facebook
+    const val facebook = "com.facebook.android:facebook-android-sdk:${Versions.facebook}"
 
     // Testing
     const val jUnit = "junit:junit:${Versions.jUnit}"

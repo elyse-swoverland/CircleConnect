@@ -71,6 +71,8 @@ dependencies {
     implementation Deps.bottomSheet
     implementation Deps.groupie
     implementation Deps.groupieKotlinExtensions
+    implementation Deps.facebook
+
     testImplementation Deps.jUnit
     androidTestImplementation Deps.testRunner
     androidTestImplementation Deps.espresso

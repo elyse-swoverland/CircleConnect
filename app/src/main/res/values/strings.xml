@@ -7,4 +7,9 @@
     <string name="messages">Messages</string>
     <string name="address">%1$s, %2$s %3$s</string>
     <string name="current_location_address">%1$s %2$s, %3$s, %4$s %5$s</string>
+
+    <!-- Facebook -->
+    <string name="facebook_app_id">2304316449853711</string>
+    <string name="fb_login_protocol_scheme">fb2304316449853711</string>
+
 </resources>
