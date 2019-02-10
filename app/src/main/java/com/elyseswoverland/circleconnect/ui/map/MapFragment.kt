@@ -100,6 +100,11 @@ class MapFragment : Fragment(), OnMapReadyCallback,
         groupAdapter.add(Section().apply {
             merchants.forEachIndexed { _, merchant ->
 
+//                val bitmap = stringToBitmap(merchant.logo!!)
+//                val merchantName = merchant.merchName
+//                Log.d("TAG", "Bitmap: $bitmap")
+//                Log.d("TAG", "Name: $merchantName")
+
                 val customInfoWindow = CustomInfoWindow(ctx)
                 mMap.setInfoWindowAdapter(customInfoWindow)
                 val m = mMap.addMarker(MarkerOptions().position(LatLng(merchant.merchLocation.latitude,

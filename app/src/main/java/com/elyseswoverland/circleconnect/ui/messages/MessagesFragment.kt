@@ -5,12 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.elyseswoverland.circleconnect.R
 import com.elyseswoverland.circleconnect.dagger.Dagger
 import com.elyseswoverland.circleconnect.models.MessageResponse
 import com.elyseswoverland.circleconnect.network.CircleConnectApiManager
 import rx.android.schedulers.AndroidSchedulers
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
+
+
+
 
 class MessagesFragment : Fragment() {
 
@@ -22,13 +26,17 @@ class MessagesFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_messages, container, false)
+        return inflater.inflate(com.elyseswoverland.circleconnect.R.layout.fragment_messages, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        circleConnectApiManager.customerMessages
+        val lastDate = Date()
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val formattedDate = dateFormat.format(lastDate)
+
+        circleConnectApiManager.getCustomerMessages(formattedDate)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onGetMessagesSuccess, this::onGetMessagesFailure)
     }

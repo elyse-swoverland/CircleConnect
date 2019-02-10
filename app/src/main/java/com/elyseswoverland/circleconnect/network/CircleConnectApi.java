@@ -36,7 +36,7 @@ public interface CircleConnectApi {
                                                  @Query("radius") int radius);
 
     @GET("/api/CustMessages")
-    Observable<MessageResponse> getCustomerMessages();
+    Observable<MessageResponse> getCustomerMessages(@Query("msgDt") String date);
 
     @POST("/api/CustFavorites")
     Observable<Boolean> updateCustomerFavorites(@Body UpdateCustFavoritesRequest request);

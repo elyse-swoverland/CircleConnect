@@ -7,6 +7,7 @@ import com.elyseswoverland.circleconnect.models.SessionRequest;
 import com.elyseswoverland.circleconnect.models.UpdateCustFavoritesRequest;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -30,8 +31,8 @@ public class CircleConnectApiManager {
         return circleConnectApi.getMerchants(customerId, latitude, longitude, radius);
     }
 
-    public Observable<MessageResponse> getCustomerMessages() {
-        return circleConnectApi.getCustomerMessages();
+    public Observable<MessageResponse> getCustomerMessages(String messageDate) {
+        return circleConnectApi.getCustomerMessages(messageDate);
     }
 
     public Observable<Boolean> updateCustomerFavorites(UpdateCustFavoritesRequest request) {
