@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.elyseswoverland.circleconnect.R
 import com.elyseswoverland.circleconnect.dagger.Dagger
 import com.elyseswoverland.circleconnect.models.Merchant
+import com.elyseswoverland.circleconnect.models.UpdateCustFavoritesRequest
 import com.elyseswoverland.circleconnect.network.CircleConnectApiManager
 import com.elyseswoverland.circleconnect.persistence.AppPreferences
 import com.elyseswoverland.circleconnect.ui.util.CustomInfoWindow
@@ -99,8 +100,6 @@ class MapFragment : Fragment(), OnMapReadyCallback,
         groupAdapter.add(Section().apply {
             merchants.forEachIndexed { _, merchant ->
 
-                val bitmap = stringToBitmap(merchant.logo!!)
-
                 val customInfoWindow = CustomInfoWindow(ctx)
                 mMap.setInfoWindowAdapter(customInfoWindow)
                 val m = mMap.addMarker(MarkerOptions().position(LatLng(merchant.merchLocation.latitude,
@@ -114,6 +113,14 @@ class MapFragment : Fragment(), OnMapReadyCallback,
 
     private fun onGetMerchantsFailure(throwable: Throwable) {
         Log.d("TAG", "Fail :(")
+    }
+
+    private fun onUpdateFavoriteSuccess(isFavorite: Boolean) {
+
+    }
+
+    private fun onUpdateFavoriteFailure(throwable: Throwable) {
+
     }
 
     private fun setUpRecyclerView() {
@@ -203,6 +210,13 @@ class MapFragment : Fragment(), OnMapReadyCallback,
 
     override fun collapseSlidingPanel() {
         sliding_layout.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+    }
+
+    override fun updateFavorite(merchId: Int, turnOn: Boolean) {
+        val request = UpdateCustFavoritesRequest(merchId, turnOn)
+        circleConnectApiManager.updateCustomerFavorites(request)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onUpdateFavoriteSuccess, this::onUpdateFavoriteFailure)
     }
 
     private fun stringToBitmap(encodedString: String): Bitmap? {

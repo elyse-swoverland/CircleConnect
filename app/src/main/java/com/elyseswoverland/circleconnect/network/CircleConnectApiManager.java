@@ -4,6 +4,7 @@ import com.elyseswoverland.circleconnect.models.Merchant;
 import com.elyseswoverland.circleconnect.models.MessageResponse;
 import com.elyseswoverland.circleconnect.models.Session;
 import com.elyseswoverland.circleconnect.models.SessionRequest;
+import com.elyseswoverland.circleconnect.models.UpdateCustFavoritesRequest;
 
 import java.util.ArrayList;
 
@@ -31,5 +32,9 @@ public class CircleConnectApiManager {
 
     public Observable<MessageResponse> getCustomerMessages() {
         return circleConnectApi.getCustomerMessages();
+    }
+
+    public Observable<Boolean> updateCustomerFavorites(UpdateCustFavoritesRequest request) {
+        return circleConnectApi.updateCustomerFavorites(request);
     }
 }

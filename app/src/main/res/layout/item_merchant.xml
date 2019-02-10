@@ -2,32 +2,41 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:id="@+id/rootLayout"
-                android:background="?attr/selectableItemBackground"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground">
+
+    <ImageView
+        android:id="@+id/favoriteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/ic_star_gray_36dp"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_centerVertical="true"
         android:layout_marginStart="16sp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:layout_centerVertical="true">
+        android:layout_toEndOf="@+id/favoriteButton"
+        android:orientation="vertical">
 
         <TextView
+            android:id="@+id/merchantName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/merchantName"
             android:textColor="@color/colorPrimaryDark"
-            android:textStyle="bold"
             android:textSize="16sp"
+            android:textStyle="bold"
             tools:text="Brugge"/>
 
         <TextView
+            android:id="@+id/merchantAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/merchantAddress"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp"
             tools:text="1011 Riviera Drive East"/>
@@ -35,9 +44,9 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/distance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/distance"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginEnd="16dp"

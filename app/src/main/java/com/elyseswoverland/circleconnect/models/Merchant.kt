@@ -27,4 +27,6 @@ data class Merchant(@SerializedName("MerchId")
                     @SerializedName("MerchantRewards")
                     val merchantRewards: MerchantRewards,
                     @SerializedName("Active")
-                    val active: Boolean)
+                    val active: Boolean,
+                    @SerializedName("CustFavorite")
+                    val custFavorite: Boolean)

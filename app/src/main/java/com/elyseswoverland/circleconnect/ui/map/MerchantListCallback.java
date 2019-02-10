@@ -9,4 +9,6 @@ public interface MerchantListCallback {
     void showInfoWindow(Marker marker);
 
     void collapseSlidingPanel();
+
+    void updateFavorite(int merchId, boolean turnOn);
 }

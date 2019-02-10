@@ -2,7 +2,6 @@ package com.elyseswoverland.circleconnect.network.interceptors;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import com.elyseswoverland.circleconnect.app.Constants;
 
@@ -21,7 +20,7 @@ public class HeaderInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences prefs = context.getApplicationContext().getSharedPreferences("general", Context.MODE_PRIVATE);
         String token = prefs.getString(Constants.AUTH_TOKEN, null);
 
         if (token == null || chain.request().url().toString().contains("session")) {
@@ -35,7 +34,7 @@ public class HeaderInterceptor implements Interceptor {
             Request.Builder request = chain.request().newBuilder()
                     .addHeader("Content-Type", "application/json")
                     .addHeader("Accept", "application/json")
-                    .addHeader("Authorization", "Bearer " + token)
+                    .addHeader("Authorization", token)
                     .method(chain.request().method(), chain.request().body());
             return chain.proceed(request.build());
         }

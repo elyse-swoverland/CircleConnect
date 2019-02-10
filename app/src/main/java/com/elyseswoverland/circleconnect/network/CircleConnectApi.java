@@ -6,6 +6,7 @@ import com.elyseswoverland.circleconnect.models.MessageResponse;
 import com.elyseswoverland.circleconnect.models.Session;
 import com.elyseswoverland.circleconnect.models.SessionRequest;
 import com.elyseswoverland.circleconnect.models.SortPreferenceType;
+import com.elyseswoverland.circleconnect.models.UpdateCustFavoritesRequest;
 
 import java.util.ArrayList;
 
@@ -36,4 +37,7 @@ public interface CircleConnectApi {
 
     @GET("/api/CustMessages")
     Observable<MessageResponse> getCustomerMessages();
+
+    @POST("/api/CustFavorites")
+    Observable<Boolean> updateCustomerFavorites(@Body UpdateCustFavoritesRequest request);
 }
