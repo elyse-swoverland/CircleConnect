@@ -65,7 +65,11 @@ class MainActivity : AppCompatActivity() {
                 R.id.action_account -> {
                     val fragmentManager = supportFragmentManager
                     val fragmentTransaction = fragmentManager.beginTransaction()
-                    fragmentTransaction.replace(R.id.content, AccountFragment())
+                    if (appPreferences.hasToken()) {
+                        fragmentTransaction.replace(R.id.content, AccountFragment())
+                    } else {
+                        fragmentTransaction.replace(R.id.content, LoginFragment())
+                    }
                     fragmentTransaction.commit()
                     true
                 }

@@ -3,7 +3,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-    android:padding="2dp">
+                android:padding="2dp">
 
     <TextView
         android:id="@+id/merchantName"
@@ -18,10 +18,18 @@
         android:id="@+id/merchantPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
         android:layout_below="@+id/merchantName"
+        android:layout_marginTop="1dp"
+        android:text="(765) 426-1822"
         android:textColor="@color/colorPrimary"
-        android:textSize="16sp"
-        android:text="(765) 426-1822"/>
+        android:textSize="16sp"/>
+
+    <!--<ImageView-->
+        <!--android:id="@+id/favoritesButton"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:src="@drawable/outline_star_border_black_36dp"-->
+        <!--android:tint="@color/colorAccent"/>-->
 
 </RelativeLayout>

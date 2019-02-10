@@ -140,6 +140,7 @@ class LoginFragment : Fragment() {
         sessionStorage.session = session
 
         appPreferences.token = session.token
+        appPreferences.custId = session.customerId
     }
 
     private fun onAppLoginFailure(throwable: Throwable) {

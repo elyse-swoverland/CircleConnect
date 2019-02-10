@@ -8,6 +8,7 @@ import com.facebook.AccessToken;
 public class AppPreferences {
     private final SharedPreferences sharedPreferences;
     private static final String FB_ACCESS_TOKEN = "FB_ACCESS_TOKEN";
+    private static final String CUST_ID = "CUST_ID";
 
     public AppPreferences(SharedPreferences sharedPreferences) {
         this.sharedPreferences = sharedPreferences;
@@ -31,5 +32,13 @@ public class AppPreferences {
 
     public boolean hasToken() {
         return getToken() != null;
+    }
+
+    public void setCustId(int custId) {
+        sharedPreferences.edit().putInt(CUST_ID, custId).apply();
+    }
+
+    public int getCustId() {
+        return sharedPreferences.getInt(CUST_ID, 0);
     }
 }

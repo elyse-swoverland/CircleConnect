@@ -2,9 +2,12 @@ package com.elyseswoverland.circleconnect.ui.map
 
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +21,7 @@ import com.elyseswoverland.circleconnect.R
 import com.elyseswoverland.circleconnect.dagger.Dagger
 import com.elyseswoverland.circleconnect.models.Merchant
 import com.elyseswoverland.circleconnect.network.CircleConnectApiManager
+import com.elyseswoverland.circleconnect.persistence.AppPreferences
 import com.elyseswoverland.circleconnect.ui.util.CustomInfoWindow
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -48,6 +52,8 @@ class MapFragment : Fragment(), OnMapReadyCallback,
     private val groupAdapter = GroupAdapter<com.xwray.groupie.ViewHolder>()
 
     @Inject lateinit var circleConnectApiManager: CircleConnectApiManager
+
+    @Inject lateinit var appPreferences: AppPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,6 +98,9 @@ class MapFragment : Fragment(), OnMapReadyCallback,
         groupAdapter.clear()
         groupAdapter.add(Section().apply {
             merchants.forEachIndexed { _, merchant ->
+
+                val bitmap = stringToBitmap(merchant.logo!!)
+
                 val customInfoWindow = CustomInfoWindow(ctx)
                 mMap.setInfoWindowAdapter(customInfoWindow)
                 val m = mMap.addMarker(MarkerOptions().position(LatLng(merchant.merchLocation.latitude,
@@ -162,7 +171,7 @@ class MapFragment : Fragment(), OnMapReadyCallback,
         fusedLocationClient.lastLocation.addOnSuccessListener(activity!!) { location ->
             // Got last known location. In some rare situations this can be null.
             if (location != null) {
-                circleConnectApiManager.getMerchants(0, location.latitude,
+                circleConnectApiManager.getMerchants(appPreferences.custId, location.latitude,
                         location.longitude, 20)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(this::onGetMerchantsSuccess, this::onGetMerchantsFailure)
@@ -194,6 +203,17 @@ class MapFragment : Fragment(), OnMapReadyCallback,
 
     override fun collapseSlidingPanel() {
         sliding_layout.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+    }
+
+    private fun stringToBitmap(encodedString: String): Bitmap? {
+        return try {
+            val encodeByte = Base64.decode(encodedString, Base64.DEFAULT)
+            BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.size)
+        } catch (e: Exception) {
+            e.message
+            null
+        }
+
     }
 
     companion object {
