@@ -41,7 +41,6 @@ class MerchantItem constructor(private val context: Context,
                 viewHolder.favoriteButton.setImageDrawable(context.getDrawable(R.drawable.ic_star_yellow_36dp))
                 callback.updateFavorite(merchant.merchId, true)
             }
-
         }
 
         viewHolder.rootLayout.setOnClickListener {

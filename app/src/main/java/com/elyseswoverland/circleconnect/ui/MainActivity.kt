@@ -1,6 +1,7 @@
 package com.elyseswoverland.circleconnect.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.elyseswoverland.circleconnect.R
 import com.elyseswoverland.circleconnect.dagger.Dagger
@@ -30,7 +31,9 @@ class MainActivity : AppCompatActivity() {
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.add(R.id.content, MapFragment())
         fragmentTransaction.commit()
-        
+
+        Log.d("INTERCEPTOR", "Token: ${appPreferences.token}")
+
         bottom_navigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.action_map -> {

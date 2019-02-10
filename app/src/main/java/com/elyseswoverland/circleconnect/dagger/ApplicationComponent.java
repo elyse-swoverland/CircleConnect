@@ -3,6 +3,7 @@ package com.elyseswoverland.circleconnect.dagger;
 import com.elyseswoverland.circleconnect.ui.MainActivity;
 import com.elyseswoverland.circleconnect.ui.login.LoginFragment;
 import com.elyseswoverland.circleconnect.ui.map.MapFragment;
+import com.elyseswoverland.circleconnect.ui.messages.MessagesFragment;
 
 import javax.inject.Singleton;
 
@@ -15,4 +16,5 @@ public interface ApplicationComponent {
     void inject(MainActivity mainActivity);
     void inject(MapFragment mapFragment);
     void inject(LoginFragment loginFragment);
+    void inject(MessagesFragment messagesFragment);
 }

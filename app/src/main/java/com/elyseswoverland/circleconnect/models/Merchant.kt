@@ -28,5 +28,17 @@ data class Merchant(@SerializedName("MerchId")
                     val merchantRewards: MerchantRewards,
                     @SerializedName("Active")
                     val active: Boolean,
+                    @SerializedName("Email")
+                    val merchEmail: String,
+                    @SerializedName("ContactName")
+                    val contactName: String,
+                    @SerializedName("MobilePhone")
+                    val mobilePhone: String? = null,
+                    @SerializedName("BusinessPhone")
+                    val businessPhone: String? = null,
+                    @SerializedName("FaceBookPage")
+                    val facebookPage: String,
+                    @SerializedName("WebsiteURL")
+                    val website: String,
                     @SerializedName("CustFavorite")
                     val custFavorite: Boolean)

@@ -113,6 +113,7 @@ class MapFragment : Fragment(), OnMapReadyCallback,
 
     private fun onGetMerchantsFailure(throwable: Throwable) {
         Log.d("TAG", "Fail :(")
+        throwable.printStackTrace()
     }
 
     private fun onUpdateFavoriteSuccess(isFavorite: Boolean) {
