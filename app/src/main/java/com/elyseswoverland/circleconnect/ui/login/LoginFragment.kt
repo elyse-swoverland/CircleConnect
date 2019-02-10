@@ -90,7 +90,6 @@ class LoginFragment : Fragment() {
     private fun setFacebookData(loginResult: LoginResult) {
         val graphRequest = GraphRequest.newMeRequest(loginResult.accessToken) { `object`, response ->
             val email = response.jsonObject.getString("email")
-            val name = response.jsonObject.getString("name")
             val firstName = response.jsonObject.getString("first_name")
             val lastName = response.jsonObject.getString("last_name")
             val id = response.jsonObject.getString("id")
@@ -98,7 +97,7 @@ class LoginFragment : Fragment() {
             val sessionRequest = SessionRequest(id, "facebook", firstName, lastName, email, null, "")
             circleConnectApiManager.startSession(sessionRequest)
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(this::onCCLoginSuccess, this::onCCLoginFailure)
+                    .subscribe(this::onAppLoginSuccess, this::onAppLoginFailure)
         }
 
         val parameters = Bundle()
@@ -112,14 +111,15 @@ class LoginFragment : Fragment() {
         try {
             val account = completedTask.getResult(ApiException::class.java)
 
-            // Signed in successfully, show authenticated UI.
-//            updateUI(account)
-            Log.d("TAG", "Google Login Success: " + account!!.displayName)
+            account?.let {
+                val sessionRequest = SessionRequest(account.id!!, "google", account.givenName!!,
+                        account.familyName!!, account.email!!, null, "")
+            circleConnectApiManager.startSession(sessionRequest)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(this::onAppLoginSuccess, this::onAppLoginFailure)
+            }
         } catch (e: ApiException) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w("TAG", "signInResult:failed code=" + e.statusCode)
-//            updateUI(null)
         }
 
     }
@@ -134,7 +134,7 @@ class LoginFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun onCCLoginSuccess(session: Session) {
+    private fun onAppLoginSuccess(session: Session) {
         Log.d("TAG", "Token: ${session.token}")
         sessionStorage.session = session
 
@@ -142,7 +142,7 @@ class LoginFragment : Fragment() {
         prefs.edit().putString(AUTH_TOKEN, session.token).apply()
     }
 
-    private fun onCCLoginFailure(throwable: Throwable) {
+    private fun onAppLoginFailure(throwable: Throwable) {
         throwable.printStackTrace()
     }
 
