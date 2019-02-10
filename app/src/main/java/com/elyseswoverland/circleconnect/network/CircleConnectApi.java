@@ -40,4 +40,7 @@ public interface CircleConnectApi {
 
     @POST("/api/CustFavorites")
     Observable<Boolean> updateCustomerFavorites(@Body UpdateCustFavoritesRequest request);
+
+    @GET("/api/CustFavorites")
+    Observable<ArrayList<Merchant>> getCustomerFavorites();
 }
