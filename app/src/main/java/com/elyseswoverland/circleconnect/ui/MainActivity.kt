@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.elyseswoverland.circleconnect.R
 import com.elyseswoverland.circleconnect.dagger.Dagger
+import com.elyseswoverland.circleconnect.persistence.AppPreferences
 import com.elyseswoverland.circleconnect.persistence.SessionStorage
 import com.elyseswoverland.circleconnect.ui.account.AccountFragment
 import com.elyseswoverland.circleconnect.ui.favorites.FavoritesFragment
@@ -17,6 +18,8 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     @Inject lateinit var sessionStorage: SessionStorage
+
+    @Inject lateinit var appPreferences: AppPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +43,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.action_favorites -> {
                     val fragmentManager = supportFragmentManager
                     val fragmentTransaction = fragmentManager.beginTransaction()
-                    if (sessionStorage.hasToken()) {
+                    if (appPreferences.hasToken()) {
                         fragmentTransaction.replace(R.id.content, FavoritesFragment())
                     } else {
                         fragmentTransaction.replace(R.id.content, LoginFragment())
@@ -51,7 +54,11 @@ class MainActivity : AppCompatActivity() {
                 R.id.action_messages -> {
                     val fragmentManager = supportFragmentManager
                     val fragmentTransaction = fragmentManager.beginTransaction()
-                    fragmentTransaction.replace(R.id.content, MessagesFragment())
+                    if (appPreferences.hasToken()) {
+                        fragmentTransaction.replace(R.id.content, MessagesFragment())
+                    } else {
+                        fragmentTransaction.replace(R.id.content, LoginFragment())
+                    }
                     fragmentTransaction.commit()
                     true
                 }

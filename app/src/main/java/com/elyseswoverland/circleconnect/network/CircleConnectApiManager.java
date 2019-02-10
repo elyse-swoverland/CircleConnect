@@ -1,6 +1,7 @@
 package com.elyseswoverland.circleconnect.network;
 
 import com.elyseswoverland.circleconnect.models.Merchant;
+import com.elyseswoverland.circleconnect.models.MessageResponse;
 import com.elyseswoverland.circleconnect.models.Session;
 import com.elyseswoverland.circleconnect.models.SessionRequest;
 
@@ -26,5 +27,9 @@ public class CircleConnectApiManager {
 
     public Observable<ArrayList<Merchant>> getMerchants(int customerId, double latitude, double longitude, int radius) {
         return circleConnectApi.getMerchants(customerId, latitude, longitude, radius);
+    }
+
+    public Observable<MessageResponse> getCustomerMessages() {
+        return circleConnectApi.getCustomerMessages();
     }
 }

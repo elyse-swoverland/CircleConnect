@@ -96,8 +96,7 @@ class MapFragment : Fragment(), OnMapReadyCallback,
                 mMap.setInfoWindowAdapter(customInfoWindow)
                 val m = mMap.addMarker(MarkerOptions().position(LatLng(merchant.merchLocation.latitude,
                         merchant.merchLocation.longitude)).title(merchant.merchName))
-                add(MerchantItem(ctx, merchant, lastLocation, m, callback!!))
-//                m.showInfoWindow()
+                add(MerchantItem(ctx, merchant, m, callback!!))
             }
         })
         recyclerView.adapter = groupAdapter

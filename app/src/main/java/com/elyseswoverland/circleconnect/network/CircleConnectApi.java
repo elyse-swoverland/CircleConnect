@@ -2,6 +2,7 @@ package com.elyseswoverland.circleconnect.network;
 
 import com.elyseswoverland.circleconnect.models.CustomerSetting;
 import com.elyseswoverland.circleconnect.models.Merchant;
+import com.elyseswoverland.circleconnect.models.MessageResponse;
 import com.elyseswoverland.circleconnect.models.Session;
 import com.elyseswoverland.circleconnect.models.SessionRequest;
 import com.elyseswoverland.circleconnect.models.SortPreferenceType;
@@ -32,4 +33,7 @@ public interface CircleConnectApi {
                                                  @Query("latitude") double latitude,
                                                  @Query("longitude") double longitude,
                                                  @Query("radius") int radius);
+
+    @GET("/api/CustMessages")
+    Observable<MessageResponse> getCustomerMessages();
 }

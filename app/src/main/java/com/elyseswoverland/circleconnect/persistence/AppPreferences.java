@@ -2,6 +2,7 @@ package com.elyseswoverland.circleconnect.persistence;
 
 import android.content.SharedPreferences;
 
+import com.elyseswoverland.circleconnect.app.Constants;
 import com.facebook.AccessToken;
 
 public class AppPreferences {
@@ -18,5 +19,17 @@ public class AppPreferences {
 
     public String getFbAccessToken() {
         return sharedPreferences.getString(FB_ACCESS_TOKEN, null);
+    }
+
+    public void setToken(String token) {
+        sharedPreferences.edit().putString(Constants.AUTH_TOKEN, token).apply();
+    }
+
+    public String getToken() {
+        return sharedPreferences.getString(Constants.AUTH_TOKEN, null);
+    }
+
+    public boolean hasToken() {
+        return getToken() != null;
     }
 }

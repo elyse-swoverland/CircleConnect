@@ -3,17 +3,16 @@ package com.elyseswoverland.circleconnect.ui.login
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.elyseswoverland.circleconnect.app.AUTH_TOKEN
 import com.elyseswoverland.circleconnect.dagger.Dagger
 import com.elyseswoverland.circleconnect.models.Session
 import com.elyseswoverland.circleconnect.models.SessionRequest
 import com.elyseswoverland.circleconnect.network.CircleConnectApiManager
+import com.elyseswoverland.circleconnect.persistence.AppPreferences
 import com.elyseswoverland.circleconnect.persistence.SessionStorage
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -40,6 +39,8 @@ class LoginFragment : Fragment() {
     lateinit var circleConnectApiManager: CircleConnectApiManager
 
     @Inject lateinit var sessionStorage: SessionStorage
+
+    @Inject lateinit var appPreferences: AppPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -138,8 +139,7 @@ class LoginFragment : Fragment() {
         Log.d("TAG", "Token: ${session.token}")
         sessionStorage.session = session
 
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        prefs.edit().putString(AUTH_TOKEN, session.token).apply()
+        appPreferences.token = session.token
     }
 
     private fun onAppLoginFailure(throwable: Throwable) {
