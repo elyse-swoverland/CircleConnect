@@ -22,11 +22,6 @@ import com.google.android.gms.common.api.ApiException
 import kotlinx.android.synthetic.main.fragment_login.*
 import java.util.*
 
-
-
-
-
-
 class LoginFragment : Fragment() {
     private lateinit var callbackManager: CallbackManager
     private lateinit var mGoogleSignInClient: GoogleSignInClient

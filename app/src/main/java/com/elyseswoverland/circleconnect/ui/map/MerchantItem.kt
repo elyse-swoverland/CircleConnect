@@ -2,13 +2,10 @@ package com.elyseswoverland.circleconnect.ui.map
 
 import android.content.Context
 import android.location.Location
-import android.view.View
 import com.elyseswoverland.circleconnect.R
 import com.elyseswoverland.circleconnect.models.Merchant
-import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
-import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import com.xwray.groupie.kotlinandroidextensions.Item
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import kotlinx.android.synthetic.main.item_merchant.*
@@ -29,25 +26,25 @@ class MerchantItem constructor(private val context: Context,
                 merchant.state,
                 merchant.zipCode)
 
-        // TODO: - Clean up
-        if (lastLocation != null) {
-            val latLngA = LatLng(lastLocation.latitude, lastLocation.longitude)
-            val latLngB = LatLng(merchant.merchLocation.latitude, merchant.merchLocation.longitude)
+//        // TODO: - Clean up
+//        if (lastLocation != null) {
+//            val latLngA = LatLng(lastLocation.latitude, lastLocation.longitude)
+//            val latLngB = LatLng(merchant.merchLocation.latitude, merchant.merchLocation.longitude)
+//
+//            val locationA = Location("point A")
+//            locationA.latitude = latLngA.latitude
+//            locationA.longitude = latLngA.longitude
+//            val locationB = Location("point B")
+//            locationB.latitude = latLngB.latitude
+//            locationB.longitude = latLngB.longitude
+//
+//            val distance = locationA.distanceTo(locationB)
+//            val distanceInMiles = distance * 0.000621371
 
-            val locationA = Location("point A")
-            locationA.latitude = latLngA.latitude
-            locationA.longitude = latLngA.longitude
-            val locationB = Location("point B")
-            locationB.latitude = latLngB.latitude
-            locationB.longitude = latLngB.longitude
-
-            val distance = locationA.distanceTo(locationB)
-            val distanceInMiles = distance * 0.000621371
-
-            viewHolder.distance.text = String.format("%.2f", distanceInMiles)
-        } else {
-            viewHolder.distance.visibility = View.GONE
-        }
+            viewHolder.distance.text = String.format("%.2f", merchant.distanceFromCustomer)
+//        } else {
+//            viewHolder.distance.visibility = View.GONE
+//        }
 
         viewHolder.rootLayout.setOnClickListener {
             val latLngB = LatLng(merchant.merchLocation.latitude, merchant.merchLocation.longitude)

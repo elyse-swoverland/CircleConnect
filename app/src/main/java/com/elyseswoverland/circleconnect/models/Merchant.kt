@@ -18,6 +18,8 @@ data class Merchant(@SerializedName("MerchId")
                     val state: String,
                     @SerializedName("Zip")
                     val zipCode: String,
+                    @SerializedName("DistanceFromCustomer")
+                    val distanceFromCustomer: Double,
                     @SerializedName("MerchLocation")
                     val merchLocation: MerchLocation,
                     @SerializedName("Logo")
@@ -25,5 +27,4 @@ data class Merchant(@SerializedName("MerchId")
                     @SerializedName("MerchantRewards")
                     val merchantRewards: MerchantRewards,
                     @SerializedName("Active")
-                    val active: Boolean) {
-}
+                    val active: Boolean)
