@@ -42,5 +42,6 @@ public interface CircleConnectApi {
     Observable<Boolean> updateCustomerFavorites(@Body UpdateCustFavoritesRequest request);
 
     @GET("/api/CustFavorites")
-    Observable<ArrayList<Merchant>> getCustomerFavorites();
+    Observable<ArrayList<Merchant>> getCustomerFavorites(@Query("latitude") double latitude,
+                                                         @Query("longitude") double longitude);
 }

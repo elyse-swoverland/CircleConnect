@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.elyseswoverland.circleconnect.dagger.Dagger
 import com.elyseswoverland.circleconnect.models.Merchant
 import com.elyseswoverland.circleconnect.network.CircleConnectApiManager
+import com.elyseswoverland.circleconnect.persistence.AppPreferences
 import kotlinx.android.synthetic.main.fragment_favorites.*
 import rx.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
@@ -18,6 +19,8 @@ import javax.inject.Inject
 class FavoritesFragment : Fragment() {
 
     @Inject lateinit var circleConnectApiManager: CircleConnectApiManager
+
+    @Inject lateinit var appPreferences: AppPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +36,7 @@ class FavoritesFragment : Fragment() {
         setupViewPager()
         favoritesTabs.setupWithViewPager(viewPager)
 
-        circleConnectApiManager.customerFavorites
+        circleConnectApiManager.getCustomerFavorites(appPreferences.recentLat, appPreferences.recentLong)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onGetFavoritesSuccess, this::onGetFavoritesFailure)
     }

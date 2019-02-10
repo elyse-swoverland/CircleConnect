@@ -38,7 +38,7 @@ public class CircleConnectApiManager {
         return circleConnectApi.updateCustomerFavorites(request);
     }
 
-    public Observable<ArrayList<Merchant>> getCustomerFavorites() {
-        return circleConnectApi.getCustomerFavorites();
+    public Observable<ArrayList<Merchant>> getCustomerFavorites(double latitude, double longitude) {
+        return circleConnectApi.getCustomerFavorites(latitude, longitude);
     }
 }

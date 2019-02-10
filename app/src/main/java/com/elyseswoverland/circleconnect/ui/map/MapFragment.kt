@@ -105,7 +105,7 @@ class MapFragment : Fragment(), OnMapReadyCallback,
 //                Log.d("TAG", "Bitmap: $bitmap")
 //                Log.d("TAG", "Name: $merchantName")
 
-                val customInfoWindow = CustomInfoWindow(ctx)
+                val customInfoWindow = CustomInfoWindow(ctx, merchant)
                 mMap.setInfoWindowAdapter(customInfoWindow)
                 val m = mMap.addMarker(MarkerOptions().position(LatLng(merchant.merchLocation.latitude,
                         merchant.merchLocation.longitude)).title(merchant.merchName))
@@ -184,6 +184,8 @@ class MapFragment : Fragment(), OnMapReadyCallback,
         fusedLocationClient.lastLocation.addOnSuccessListener(activity!!) { location ->
             // Got last known location. In some rare situations this can be null.
             if (location != null) {
+                appPreferences.recentLat = location.latitude
+                appPreferences.recentLong = location.longitude
                 circleConnectApiManager.getMerchants(appPreferences.custId, location.latitude,
                         location.longitude, 20)
                         .observeOn(AndroidSchedulers.mainThread())
