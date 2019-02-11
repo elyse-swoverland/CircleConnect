@@ -1,5 +1,6 @@
 package com.elyseswoverland.circleconnect.ui.favorites
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,12 +12,16 @@ import com.elyseswoverland.circleconnect.dagger.Dagger
 import com.elyseswoverland.circleconnect.models.Merchant
 import com.elyseswoverland.circleconnect.network.CircleConnectApiManager
 import com.elyseswoverland.circleconnect.persistence.AppPreferences
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.Section
+import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.fragment_favorites.*
-import rx.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 
 
 class FavoritesFragment : Fragment() {
+    private val groupAdapter = GroupAdapter<ViewHolder>()
+    private lateinit var ctx: Context
 
     @Inject lateinit var circleConnectApiManager: CircleConnectApiManager
 
@@ -33,12 +38,15 @@ class FavoritesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        ctx = context ?: return
+
         setupViewPager()
         favoritesTabs.setupWithViewPager(viewPager)
 
-        circleConnectApiManager.getCustomerFavorites(appPreferences.recentLat, appPreferences.recentLong)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onGetFavoritesSuccess, this::onGetFavoritesFailure)
+//        circleConnectApiManager.getCustomerFavorites(appPreferences.recentLat, appPreferences.recentLong)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(this::onGetFavoritesSuccess, this::onGetFavoritesFailure)
     }
 
     private fun setupViewPager() {
@@ -49,6 +57,12 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun onGetFavoritesSuccess(favorites: ArrayList<Merchant>) {
+        groupAdapter.clear()
+        groupAdapter.add(Section().apply {
+            favorites.forEachIndexed { _, merchant ->
+                add(FavoritesItem(ctx, merchant))
+            }
+        })
 
     }
 

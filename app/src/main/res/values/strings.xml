@@ -13,4 +13,6 @@
     <string name="facebook_app_id">2304316449853711</string>
     <string name="fb_login_protocol_scheme">fb2304316449853711</string>
 
+    <!-- Accessibility -->
+    <string name="image_logo">Image logo</string>
 </resources>
