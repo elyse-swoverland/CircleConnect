@@ -59,13 +59,20 @@ class MessagesFragment : Fragment() {
     }
 
     private fun onGetMessagesSuccess(messages: MessageResponse) {
-        groupAdapter.clear()
-        groupAdapter.add(Section().apply {
-            messages.messages.forEachIndexed { _, message ->
-                add(MessageItem(ctx, message))
-            }
-        })
-        recyclerView.adapter = groupAdapter
+        if (messages.messages.size > 0) {
+            recyclerView.visibility = View.VISIBLE
+            noNewMessages.visibility = View.GONE
+            groupAdapter.clear()
+            groupAdapter.add(Section().apply {
+                messages.messages.forEachIndexed { _, message ->
+                    add(MessageItem(ctx, message))
+                }
+            })
+            recyclerView.adapter = groupAdapter
+        } else {
+            recyclerView.visibility = View.GONE
+            noNewMessages.visibility = View.VISIBLE
+        }
     }
 
     private fun onGetMessagesFailure(throwable: Throwable) {
