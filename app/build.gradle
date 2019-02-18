@@ -73,6 +73,7 @@ dependencies {
     implementation Deps.groupieKotlinExtensions
     implementation Deps.facebook
     implementation Deps.googleLogin
+    implementation 'com.michaelmuenzer.android:ScrollableNumberPicker:0.2.2'
     testImplementation Deps.jUnit
     androidTestImplementation Deps.testRunner
     androidTestImplementation Deps.espresso

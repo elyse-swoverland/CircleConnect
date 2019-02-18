@@ -13,7 +13,7 @@ class PreferencesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(com.elyseswoverland.circleconnect.R.layout.activity_preferences)
 
-        val paths = arrayOf("Category", "Distance", "Newest Members")
+        val paths = arrayOf("by Category", "by Distance", "by Newest Members")
         val adapter = ArrayAdapter<String>(this@PreferencesActivity,
                 R.layout.item_spinner, paths)
 

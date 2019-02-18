@@ -62,6 +62,9 @@ object Versions {
     // Google Login
     const val googleLogin = "16.0.1"
 
+    // Number Picker
+    const val numberPicker = "1.0.0"
+
     // Testing
     const val jUnit = "4.12"
     const val testRunner = "1.1.0"
@@ -139,6 +142,9 @@ object Deps {
 
     // Google Login
     const val googleLogin = "com.google.android.gms:play-services-auth:${Versions.googleLogin}"
+
+    // Number Picker
+    const val numberPicker = "it.sephiroth.android.library:number-sliding-picker:${Versions.numberPicker}"
 
     // Testing
     const val jUnit = "junit:junit:${Versions.jUnit}"

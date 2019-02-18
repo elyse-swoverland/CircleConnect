@@ -17,4 +17,12 @@
 
     <!-- Accessibility -->
     <string name="image_logo">Image logo</string>
+    <string name="sort">Sort</string>
+    <string name="save">Save</string>
+    <string name="filters">Filters</string>
+    <string name="restaurants_and_food">Restaurants and Food</string>
+    <string name="retail">Retail</string>
+    <string name="arts_and_entertainment">Arts and Entertainment</string>
+    <string name="service">Service</string>
+    <string name="distance">Distance</string>
 </resources>
