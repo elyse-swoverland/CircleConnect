@@ -31,7 +31,7 @@ data class Merchant(@SerializedName("MerchId")
                     @SerializedName("Email")
                     val merchEmail: String,
                     @SerializedName("ContactName")
-                    val contactName: String,
+                    val contactName: String?,
                     @SerializedName("MobilePhone")
                     val mobilePhone: String? = null,
                     @SerializedName("BusinessPhone")

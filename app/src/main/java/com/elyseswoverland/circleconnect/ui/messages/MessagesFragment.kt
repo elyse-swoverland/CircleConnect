@@ -21,9 +21,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-
-
-
 class MessagesFragment : Fragment() {
     private val groupAdapter = GroupAdapter<ViewHolder>()
     private lateinit var ctx: Context
@@ -72,6 +69,6 @@ class MessagesFragment : Fragment() {
     }
 
     private fun onGetMessagesFailure(throwable: Throwable) {
-
+        throwable.printStackTrace()
     }
 }

@@ -8,6 +8,7 @@
     <string name="address">%1$s, %2$s %3$s</string>
     <string name="current_location_address">%1$s %2$s, %3$s, %4$s %5$s</string>
     <string name="distance_from_customer">%.2f mi</string>
+    <string name="contact_name">Contact: %1$s</string>
 
     <!-- Facebook -->
     <string name="facebook_app_id">2304316449853711</string>
