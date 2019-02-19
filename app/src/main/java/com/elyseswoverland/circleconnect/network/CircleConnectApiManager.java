@@ -1,5 +1,6 @@
 package com.elyseswoverland.circleconnect.network;
 
+import com.elyseswoverland.circleconnect.models.CustomerSetting;
 import com.elyseswoverland.circleconnect.models.Merchant;
 import com.elyseswoverland.circleconnect.models.MessageResponse;
 import com.elyseswoverland.circleconnect.models.Session;
@@ -40,5 +41,13 @@ public class CircleConnectApiManager {
 
     public Observable<ArrayList<Merchant>> getCustomerFavorites(double latitude, double longitude) {
         return circleConnectApi.getCustomerFavorites(latitude, longitude);
+    }
+
+    public Observable<CustomerSetting> getCustomerPrefs() {
+        return circleConnectApi.getCustomerSettings();
+    }
+
+    public Observable<Boolean> updateCustomerPrefs(CustomerSetting customerSetting) {
+        return circleConnectApi.updateCustomerSetting(customerSetting);
     }
 }

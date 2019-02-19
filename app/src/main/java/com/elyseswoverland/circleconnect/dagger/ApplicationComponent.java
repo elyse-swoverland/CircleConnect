@@ -5,6 +5,7 @@ import com.elyseswoverland.circleconnect.ui.favorites.FavoritesFragment;
 import com.elyseswoverland.circleconnect.ui.login.LoginFragment;
 import com.elyseswoverland.circleconnect.ui.map.MapFragment;
 import com.elyseswoverland.circleconnect.ui.messages.MessagesFragment;
+import com.elyseswoverland.circleconnect.ui.preferences.PreferencesActivity;
 
 import javax.inject.Singleton;
 
@@ -19,4 +20,5 @@ public interface ApplicationComponent {
     void inject(LoginFragment loginFragment);
     void inject(MessagesFragment messagesFragment);
     void inject(FavoritesFragment favoritesFragment);
+    void inject(PreferencesActivity preferencesActivity);
 }

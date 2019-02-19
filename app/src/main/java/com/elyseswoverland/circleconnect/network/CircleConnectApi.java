@@ -27,7 +27,7 @@ public interface CircleConnectApi {
     Observable<CustomerSetting> getCustomerSettings();
 
     @POST("/api/CustomerSetting")
-    Observable<Void> postCustomerSetting(@Body CustomerSetting customerSetting);
+    Observable<Boolean> updateCustomerSetting(@Body CustomerSetting customerSetting);
 
     @GET("/api/Merchants")
     Observable<ArrayList<Merchant>> getMerchants(@Query("customerId") int customerId,

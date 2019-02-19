@@ -15,5 +15,4 @@ data class CustomerSetting(@SerializedName("CustomerId")
                            @SerializedName("CategoryFilterService")
                            var filterService: Boolean,
                            @SerializedName("DistanceValue")
-                           var distanceValue: Int) {
-}
+                           var distanceValue: Int)

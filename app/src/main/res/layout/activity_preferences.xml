@@ -6,8 +6,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:id="@+id/rootLayout"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/sortBy"
@@ -43,41 +45,41 @@
             android:paddingBottom="8dp"
             android:text="@string/filters"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold"/>
 
         <CheckBox
-            android:id="@+id/restaurantsFood"
+            android:id="@+id/restaurantsFoodCheckbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="16dp"
             android:text="@string/restaurants_and_food"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp"/>
+            android:textSize="18sp"/>
 
         <CheckBox
-            android:id="@+id/retail"
+            android:id="@+id/retailCheckbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="4dp"
             android:text="@string/retail"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp"/>
+            android:textSize="18sp"/>
 
         <CheckBox
-            android:id="@+id/artsEntertainment"
+            android:id="@+id/artsEntertainmentCheckbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="4dp"
             android:text="@string/arts_and_entertainment"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp"/>
+            android:textSize="18sp"/>
 
         <CheckBox
-            android:id="@+id/service"
+            android:id="@+id/serviceCheckbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -85,7 +87,7 @@
             android:layout_marginBottom="16dp"
             android:text="@string/service"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp"/>
+            android:textSize="18sp"/>
 
         <TextView
             android:id="@+id/distance"
@@ -102,7 +104,7 @@
             android:textStyle="bold"/>
 
         <com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPicker
-            android:id="@+id/number_picker_horizontal"
+            android:id="@+id/distancePicker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -120,7 +122,7 @@
             app:snp_orientation="horizontal"
             app:snp_stepSize="1"
             app:snp_value_text_color="@color/colorPrimary"
-            app:snp_value_text_size="20sp"/>
+            app:snp_value_text_size="18sp"/>
 
     </LinearLayout>
 
