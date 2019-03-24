@@ -22,7 +22,7 @@
             android:paddingBottom="8dp"
             android:text="@string/sort"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold"/>
 
         <Spinner
@@ -100,7 +100,7 @@
             android:paddingBottom="8dp"
             android:text="@string/distance"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold"/>
 
         <com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPicker

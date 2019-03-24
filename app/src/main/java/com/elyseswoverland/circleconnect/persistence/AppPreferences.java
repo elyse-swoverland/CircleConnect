@@ -12,6 +12,7 @@ public class AppPreferences {
     private static final String RECENT_LAT = "RECENT_LAT";
     private static final String RECENT_LONG = "RECENT_LONG";
     private static final String SORT_PREF_POSITION = "SORT_PREF_POSITION";
+    private static final String DISTANCE_PREF = "DISTANCE_PREF";
 
     public AppPreferences(SharedPreferences sharedPreferences) {
         this.sharedPreferences = sharedPreferences;
@@ -69,5 +70,13 @@ public class AppPreferences {
 
     public int getSortByPreference() {
         return sharedPreferences.getInt(SORT_PREF_POSITION, 0);
+    }
+
+    public void setDistancePreference(int distancePreference) {
+        sharedPreferences.edit().putInt(DISTANCE_PREF, distancePreference).apply();
+    }
+
+    public int getDistancePreference() {
+        return sharedPreferences.getInt(DISTANCE_PREF, 20);
     }
 }

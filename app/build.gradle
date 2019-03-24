@@ -49,10 +49,6 @@ dependencies {
     implementation Deps.support
     implementation Deps.coreKtx
     implementation Deps.design
-    implementation Deps.navFragment
-    implementation Deps.navUi
-    implementation Deps.navFragmentKtx
-    implementation Deps.navUiKtx
     implementation Deps.constraintLayout
     implementation Deps.maps
     implementation Deps.location
