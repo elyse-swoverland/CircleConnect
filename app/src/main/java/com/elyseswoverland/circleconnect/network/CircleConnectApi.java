@@ -3,6 +3,7 @@ package com.elyseswoverland.circleconnect.network;
 import com.elyseswoverland.circleconnect.models.CustomerSetting;
 import com.elyseswoverland.circleconnect.models.Merchant;
 import com.elyseswoverland.circleconnect.models.MessageResponse;
+import com.elyseswoverland.circleconnect.models.Profile;
 import com.elyseswoverland.circleconnect.models.Session;
 import com.elyseswoverland.circleconnect.models.SessionRequest;
 import com.elyseswoverland.circleconnect.models.SortPreferenceType;
@@ -44,4 +45,10 @@ public interface CircleConnectApi {
     @GET("/api/CustFavorites")
     Observable<ArrayList<Merchant>> getCustomerFavorites(@Query("latitude") double latitude,
                                                          @Query("longitude") double longitude);
+
+    @GET("/api/Profile")
+    Observable<Profile> getUserProfile();
+
+    @POST("/api/Profile")
+    Observable<Boolean> setUserProfile(@Body Profile profile);
 }

@@ -3,6 +3,7 @@ package com.elyseswoverland.circleconnect.network;
 import com.elyseswoverland.circleconnect.models.CustomerSetting;
 import com.elyseswoverland.circleconnect.models.Merchant;
 import com.elyseswoverland.circleconnect.models.MessageResponse;
+import com.elyseswoverland.circleconnect.models.Profile;
 import com.elyseswoverland.circleconnect.models.Session;
 import com.elyseswoverland.circleconnect.models.SessionRequest;
 import com.elyseswoverland.circleconnect.models.UpdateCustFavoritesRequest;
@@ -49,5 +50,13 @@ public class CircleConnectApiManager {
 
     public Observable<Boolean> updateCustomerPrefs(CustomerSetting customerSetting) {
         return circleConnectApi.updateCustomerSetting(customerSetting);
+    }
+
+    public Observable<Profile> getUserProfile() {
+        return circleConnectApi.getUserProfile();
+    }
+
+    public Observable<Boolean> setUserProfile(Profile profile) {
+        return circleConnectApi.setUserProfile(profile);
     }
 }
