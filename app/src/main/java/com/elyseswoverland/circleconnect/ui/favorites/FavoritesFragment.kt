@@ -3,11 +3,13 @@ package com.elyseswoverland.circleconnect.ui.favorites
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.elyseswoverland.circleconnect.R
 import com.elyseswoverland.circleconnect.dagger.Dagger
 import com.elyseswoverland.circleconnect.models.Merchant
 import com.elyseswoverland.circleconnect.network.CircleConnectApiManager
@@ -29,6 +31,7 @@ class FavoritesFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
         Dagger.getInstance().component().inject(this)
     }
 
@@ -47,6 +50,17 @@ class FavoritesFragment : Fragment() {
 //        circleConnectApiManager.getCustomerFavorites(appPreferences.recentLat, appPreferences.recentLong)
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe(this::onGetFavoritesSuccess, this::onGetFavoritesFailure)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        activity?.invalidateOptionsMenu()
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?) {
+        super.onPrepareOptionsMenu(menu)
+        menu?.findItem(R.id.preferences)?.isVisible = false
+        menu?.findItem(R.id.logout)?.isVisible = false
     }
 
     private fun setupViewPager() {

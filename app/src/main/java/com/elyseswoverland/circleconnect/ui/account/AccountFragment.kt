@@ -2,6 +2,7 @@ package com.elyseswoverland.circleconnect.ui.account
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -27,6 +28,7 @@ class AccountFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
         Dagger.getInstance().component().inject(this)
         cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) - dobYearAdjustment)
     }
@@ -65,6 +67,11 @@ class AccountFragment : Fragment() {
         circleConnectApiManager.userProfile
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onGetProfileSuccess, this::onGetProfileFailure)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?) {
+        super.onPrepareOptionsMenu(menu)
+        menu?.findItem(R.id.preferences)?.isVisible = false
     }
 
     private fun onGetProfileSuccess(profile: Profile) {

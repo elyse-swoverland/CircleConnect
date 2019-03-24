@@ -3,12 +3,14 @@ package com.elyseswoverland.circleconnect.ui.messages
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.elyseswoverland.circleconnect.R
 import com.elyseswoverland.circleconnect.dagger.Dagger
 import com.elyseswoverland.circleconnect.models.MessageResponse
 import com.elyseswoverland.circleconnect.network.CircleConnectApiManager
@@ -29,7 +31,9 @@ class MessagesFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
         Dagger.getInstance().component().inject(this)
+        activity?.invalidateOptionsMenu()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -49,6 +53,12 @@ class MessagesFragment : Fragment() {
         circleConnectApiManager.getCustomerMessages(formattedDate)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onGetMessagesSuccess, this::onGetMessagesFailure)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?) {
+        super.onPrepareOptionsMenu(menu)
+        menu?.findItem(R.id.preferences)?.isVisible = false
+        menu?.findItem(R.id.logout)?.isVisible = false
     }
 
     private fun setUpRecyclerView() {
