@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.elyseswoverland.circleconnect.R
 import com.elyseswoverland.circleconnect.dagger.Dagger
@@ -53,6 +54,14 @@ class AccountFragment : Fragment() {
             dialogFragment.show(childFragmentManager.beginTransaction(), DatePickerDialogFragment.TAG)
         }
 
+        saveButton.setOnClickListener {
+            val profile = Profile(firstName.text.toString(), lastName.text.toString(), email.text.toString(),
+                    zipCode.text.toString(), birthdate.text.toString())
+            circleConnectApiManager.setUserProfile(profile)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(this::onSetProfileSuccess, this::onSetProfileFailure)
+        }
+
         circleConnectApiManager.userProfile
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onGetProfileSuccess, this::onGetProfileFailure)
@@ -67,6 +76,14 @@ class AccountFragment : Fragment() {
     }
 
     private fun onGetProfileFailure(throwable: Throwable) {
+        throwable.printStackTrace()
+    }
+
+    private fun onSetProfileSuccess(success: Boolean) {
+        Toast.makeText(context, "Profile saved successfully!", Toast.LENGTH_LONG).show()
+    }
+
+    private fun onSetProfileFailure(throwable: Throwable) {
         throwable.printStackTrace()
     }
 }
