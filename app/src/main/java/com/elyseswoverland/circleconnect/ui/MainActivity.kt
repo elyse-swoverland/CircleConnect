@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.elyseswoverland.circleconnect.R
 import com.elyseswoverland.circleconnect.dagger.Dagger
@@ -97,6 +98,10 @@ class MainActivity : AppCompatActivity() {
         return when (item!!.itemId) {
             R.id.preferences -> {
                 startActivity(Intent(this@MainActivity, PreferencesActivity::class.java))
+                true
+            }
+            R.id.logout -> {
+                Toast.makeText(this@MainActivity, "Logout", Toast.LENGTH_LONG).show()
                 true
             }
             else -> super.onOptionsItemSelected(item)
