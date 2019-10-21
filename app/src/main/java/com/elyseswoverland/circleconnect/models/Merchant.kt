@@ -1,7 +1,10 @@
 package com.elyseswoverland.circleconnect.models
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Merchant(@SerializedName("MerchId")
                     val merchId: Int,
                     @SerializedName("MerchType")
@@ -41,4 +44,4 @@ data class Merchant(@SerializedName("MerchId")
                     @SerializedName("WebsiteURL")
                     val website: String,
                     @SerializedName("CustFavorite")
-                    val custFavorite: Boolean)
+                    val custFavorite: Boolean) : Parcelable

@@ -2,10 +2,13 @@ package com.elyseswoverland.circleconnect.ui.favorites
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.view.forEachIndexed
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -14,14 +17,15 @@ import com.elyseswoverland.circleconnect.dagger.Dagger
 import com.elyseswoverland.circleconnect.models.Merchant
 import com.elyseswoverland.circleconnect.network.CircleConnectApiManager
 import com.elyseswoverland.circleconnect.persistence.AppPreferences
+import com.google.android.material.tabs.TabLayout
 import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.Section
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.fragment_favorites.*
+import rx.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 
 
-class FavoritesFragment : Fragment() {
+class FavoritesFragment : Fragment(), TabLayout.OnTabSelectedListener {
     private val groupAdapter = GroupAdapter<ViewHolder>()
     private lateinit var ctx: Context
 
@@ -44,17 +48,9 @@ class FavoritesFragment : Fragment() {
 
         ctx = context ?: return
 
-        setupViewPager()
-        favoritesTabs.setupWithViewPager(viewPager)
-
-//        circleConnectApiManager.getCustomerFavorites(appPreferences.recentLat, appPreferences.recentLong)
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(this::onGetFavoritesSuccess, this::onGetFavoritesFailure)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        activity?.invalidateOptionsMenu()
+        circleConnectApiManager.getCustomerFavorites(appPreferences.recentLat, appPreferences.recentLong)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onGetFavoritesSuccess, this::onGetFavoritesFailure)
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?) {
@@ -63,24 +59,55 @@ class FavoritesFragment : Fragment() {
         menu?.findItem(R.id.logout)?.isVisible = false
     }
 
-    private fun setupViewPager() {
+    private fun setupViewPager(favorites: ArrayList<Merchant>) {
         val adapter = Adapter(childFragmentManager)
-        adapter.addFragment(AllFavoritesFragment.newInstance(), "All")
-        adapter.addFragment(NearbyFavoritesFragment.newInstance(), "Near Me")
+        adapter.addFragment(AllFavoritesFragment.newInstance(favorites), "All")
+        adapter.addFragment(NearbyFavoritesFragment.newInstance(favorites), "Near Me")
         viewPager.adapter = adapter
     }
 
+    // TODO: - Redo actionbar
     private fun onGetFavoritesSuccess(favorites: ArrayList<Merchant>) {
-        groupAdapter.clear()
-        groupAdapter.add(Section().apply {
-            favorites.forEachIndexed { _, merchant ->
-                add(FavoritesItem(ctx, merchant))
+        Log.d("TAG", "Success")
+        setupViewPager(favorites)
+        favoritesTabs.setupWithViewPager(viewPager)
+
+        favoritesTabs.forEachIndexed { index, view ->
+            val tab: TabLayout.Tab? = favoritesTabs.getTabAt(index)
+            tab?.let {
+                val tabTextView = TextView(ctx)
+                tab.customView = tabTextView
+
+                tabTextView.layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
+                tabTextView.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+
+                tabTextView.text = tab.text
             }
-        })
+        }
+        favoritesTabs.addOnTabSelectedListener(this)
+
+//        groupAdapter.clear()
+//        groupAdapter.add(Section().apply {
+//            favorites.forEachIndexed { _, merchant ->
+//                add(FavoritesItem(ctx, merchant))
+//            }
+//        })
 
     }
 
     private fun onGetFavoritesFailure(throwable: Throwable) {
+
+    }
+
+    override fun onTabSelected(p0: TabLayout.Tab?) {
+
+    }
+
+    override fun onTabUnselected(p0: TabLayout.Tab?) {
+
+    }
+
+    override fun onTabReselected(p0: TabLayout.Tab?) {
 
     }
 
