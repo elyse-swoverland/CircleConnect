@@ -32,6 +32,8 @@ public interface CircleConnectApi {
 
     @GET("/api/Merchants")
     Observable<ArrayList<Merchant>> getMerchants(@Query("customerId") int customerId,
+                                                 @Query("CustLatitude") double custLatitude,
+                                                 @Query("CustLongitude") double custLongitude,
                                                  @Query("latitude") double latitude,
                                                  @Query("longitude") double longitude,
                                                  @Query("radius") int radius);

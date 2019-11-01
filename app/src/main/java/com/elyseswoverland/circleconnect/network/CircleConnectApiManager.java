@@ -28,8 +28,8 @@ public class CircleConnectApiManager {
         return circleConnectApi.startSession(sessionRequest);
     }
 
-    public Observable<ArrayList<Merchant>> getMerchants(int customerId, double latitude, double longitude, int radius) {
-        return circleConnectApi.getMerchants(customerId, latitude, longitude, radius);
+    public Observable<ArrayList<Merchant>> getMerchants(int customerId, double custLatitude, double custLongitude, double latitude, double longitude, int radius) {
+        return circleConnectApi.getMerchants(customerId, custLatitude, custLongitude, latitude, longitude, radius);
     }
 
     public Observable<MessageResponse> getCustomerMessages(String messageDate) {

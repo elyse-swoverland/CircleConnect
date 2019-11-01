@@ -203,6 +203,7 @@ class MapFragment : Fragment(), OnMapReadyCallback,
                 appPreferences.recentLat = location.latitude
                 appPreferences.recentLong = location.longitude
                 circleConnectApiManager.getMerchants(appPreferences.custId, location.latitude,
+                        location.longitude, location.latitude,
                         location.longitude, appPreferences.distancePreference)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(this::onGetMerchantsSuccess, this::onGetMerchantsFailure)
