@@ -1,6 +1,9 @@
 package com.elyseswoverland.circleconnect.ui.favorites
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.util.Base64
 import com.elyseswoverland.circleconnect.models.Merchant
 import com.xwray.groupie.kotlinandroidextensions.Item
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
@@ -14,6 +17,20 @@ class FavoritesItem constructor(private val context: Context,
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.merchantName.text = merchant.merchName
         viewHolder.merchantType.text = merchant.merchType.merchTypeDescription
+
+        merchant.logo?.let {
+            viewHolder.merchantLogo.setImageBitmap(stringToBitmap(merchant.logo))
+        }
     }
 
+    private fun stringToBitmap(encodedString: String): Bitmap? {
+        return try {
+            val encodeByte = Base64.decode(encodedString, Base64.DEFAULT)
+            BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.size)
+        } catch (e: Exception) {
+            e.message
+            null
+        }
+
+    }
 }

@@ -4,14 +4,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+    <ImageView
+        android:id="@+id/merchantLogo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/image_logo"/>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginStart="16sp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_toEndOf="@+id/merchantLogo">
 
         <TextView
             android:id="@+id/merchantName"
@@ -31,5 +42,14 @@
             tools:text="Brewery"/>
 
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:id="@+id/infoIcon"
+        android:src="@drawable/ic_info_outline_black_36dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
+        android:layout_centerVertical="true"/>
 
 </RelativeLayout>

@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.util.Base64
@@ -212,15 +211,7 @@ class MapFragment : Fragment(), OnMapReadyCallback,
                 val currentLatLng = LatLng(location.latitude, location.longitude)
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 10f))
 
-                val geocoder = Geocoder(ctx, Locale.getDefault())
-                val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
-                val address = addresses[0]
-                currentLocationAddress.text = String.format(getString(R.string.current_location_address),
-                        address.subThoroughfare,
-                        address.thoroughfare,
-                        address.locality,
-                        address.adminArea,
-                        address.postalCode)
+                currentLocationAddress.text = "Circle Connect members within this area"
             }
         }
     }
