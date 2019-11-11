@@ -1,38 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
-    <com.google.android.material.tabs.TabLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/favoritesTabs"
-        android:background="@color/colorPrimary"
-        app:tabGravity="fill"
-        app:tabIndicatorColor="@color/colorAccent"
-        app:tabIndicatorHeight="5dp"
-        app:tabMode="fixed"
-        app:tabTextColor="@color/white">
-
-    </com.google.android.material.tabs.TabLayout>
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager"
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/favoritesTabs"
-        tools:visibility="visible"/>
+        android:id="@+id/favoritesRecyclerview">
 
-    <ProgressBar
-        android:id="@+id/recentActivityProgress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:indeterminateTint="@color/colorPrimary"
-        android:visibility="gone"
-        tools:visibility="visible" />
+    </androidx.recyclerview.widget.RecyclerView>
+
+<!--    <com.google.android.material.appbar.AppBarLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/appBar"-->
+<!--        android:background="@android:color/transparent"-->
+<!--        app:elevation="0dp"-->
+<!--        app:layout_scrollFlags="scroll|enterAlways">-->
+
+<!--        <com.google.android.material.tabs.TabLayout-->
+<!--            android:id="@+id/favoritesTabs"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@color/colorPrimary"-->
+<!--            app:tabGravity="fill"-->
+<!--            app:tabIndicatorColor="@color/colorAccent"-->
+<!--            app:tabIndicatorHeight="5dp"-->
+<!--            app:tabMode="fixed"-->
+<!--            app:tabTextColor="@color/white">-->
+
+<!--        </com.google.android.material.tabs.TabLayout>-->
+
+<!--    </com.google.android.material.appbar.AppBarLayout>-->
+
+<!--    <androidx.viewpager.widget.ViewPager-->
+<!--        android:id="@+id/viewPager"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_below="@+id/appBar"-->
+<!--        tools:visibility="visible" />-->
+
+<!--    <ProgressBar-->
+<!--        android:id="@+id/recentActivityProgress"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_centerInParent="true"-->
+<!--        android:indeterminateTint="@color/colorPrimary"-->
+<!--        android:visibility="gone"-->
+<!--        tools:visibility="visible" />-->
 
 </RelativeLayout>
