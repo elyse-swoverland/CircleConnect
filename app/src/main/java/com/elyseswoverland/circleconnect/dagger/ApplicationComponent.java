@@ -2,6 +2,7 @@ package com.elyseswoverland.circleconnect.dagger;
 
 import com.elyseswoverland.circleconnect.ui.MainActivity;
 import com.elyseswoverland.circleconnect.ui.account.AccountFragment;
+import com.elyseswoverland.circleconnect.ui.businesscard.BusinessCardActivity;
 import com.elyseswoverland.circleconnect.ui.favorites.FavoritesFragment;
 import com.elyseswoverland.circleconnect.ui.login.LoginFragment;
 import com.elyseswoverland.circleconnect.ui.map.MapFragment;
@@ -23,4 +24,5 @@ public interface ApplicationComponent {
     void inject(FavoritesFragment favoritesFragment);
     void inject(PreferencesActivity preferencesActivity);
     void inject(AccountFragment accountFragment);
+    void inject(BusinessCardActivity businessCardActivity);
 }
