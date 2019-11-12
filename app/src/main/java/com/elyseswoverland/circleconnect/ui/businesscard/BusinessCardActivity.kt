@@ -43,6 +43,7 @@ class BusinessCardActivity: AppCompatActivity() {
         address.text = merchant.address
         hours.text = merchant.hours
         phone.text = merchant.businessPhone
+        contactName.text = merchant.contactName
         distance.text = String.format(getString(R.string.distance_from_customer),
                 merchant.distanceFromCustomer)
         merchant.logo?.let {
@@ -77,7 +78,7 @@ class BusinessCardActivity: AppCompatActivity() {
     }
 
     private fun onUpdateFavoriteSuccess(isFavorite: Boolean) {
-        
+
     }
 
     private fun onUpdateFavoriteFailure(throwable: Throwable) {

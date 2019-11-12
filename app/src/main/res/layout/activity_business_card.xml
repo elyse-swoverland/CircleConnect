@@ -103,18 +103,35 @@
                 android:layout_weight="1"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp"
+                android:layout_gravity="center_vertical"
                 tools:text="Monday - Friday 10am-5pm" />
 
-            <TextView
-                android:id="@+id/phone"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:orientation="vertical"
                 android:layout_weight="1"
-                android:gravity="end"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="16sp"
-                tools:text="(765) 426-1822" />
+                android:layout_gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|center_vertical"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="16sp"
+                    tools:text="(765) 426-1822" />
+
+                <TextView
+                    android:id="@+id/contactName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|center_vertical"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="16sp"
+                    tools:text="Elyse Swoverland"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
