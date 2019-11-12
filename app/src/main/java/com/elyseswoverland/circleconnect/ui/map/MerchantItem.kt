@@ -3,7 +3,6 @@ package com.elyseswoverland.circleconnect.ui.map
 import android.content.Context
 import com.elyseswoverland.circleconnect.R
 import com.elyseswoverland.circleconnect.models.Merchant
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.xwray.groupie.kotlinandroidextensions.Item
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
@@ -44,10 +43,11 @@ class MerchantItem constructor(private val context: Context,
         }
 
         viewHolder.rootLayout.setOnClickListener {
-            val latLngB = LatLng(merchant.merchLocation.latitude, merchant.merchLocation.longitude)
-            callback.moveMap(latLngB)
-            callback.showInfoWindow(m)
-            callback.collapseSlidingPanel()
+//            val latLngB = LatLng(merchant.merchLocation.latitude, merchant.merchLocation.longitude)
+//            callback.moveMap(latLngB)
+//            callback.showInfoWindow(m)
+//            callback.collapseSlidingPanel()
+            callback.goToBusinessCard(merchant)
         }
     }
 }

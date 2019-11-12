@@ -21,6 +21,7 @@ import com.elyseswoverland.circleconnect.models.Merchant
 import com.elyseswoverland.circleconnect.models.UpdateCustFavoritesRequest
 import com.elyseswoverland.circleconnect.network.CircleConnectApiManager
 import com.elyseswoverland.circleconnect.persistence.AppPreferences
+import com.elyseswoverland.circleconnect.ui.businesscard.BusinessCardActivity
 import com.elyseswoverland.circleconnect.ui.preferences.PreferencesActivity
 import com.elyseswoverland.circleconnect.ui.util.CustomInfoWindow
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -233,6 +234,11 @@ class MapFragment : Fragment(), OnMapReadyCallback,
         circleConnectApiManager.updateCustomerFavorites(request)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onUpdateFavoriteSuccess, this::onUpdateFavoriteFailure)
+    }
+
+    override fun goToBusinessCard(merchant: Merchant) {
+        startActivity(BusinessCardActivity.newIntent(ctx, merchant))
+        activity?.overridePendingTransition(R.anim.slide_up, R.anim.slide_down)
     }
 
     private fun stringToBitmap(encodedString: String): Bitmap? {

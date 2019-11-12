@@ -21,6 +21,8 @@ data class Merchant(@SerializedName("MerchId")
                     val state: String,
                     @SerializedName("Zip")
                     val zipCode: String,
+                    @SerializedName("Hours")
+                    val hours: String,
                     @SerializedName("DistanceFromCustomer")
                     val distanceFromCustomer: Double,
                     @SerializedName("MerchLocation")
