@@ -2,10 +2,8 @@ package com.elyseswoverland.circleconnect.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.elyseswoverland.circleconnect.R
 import com.elyseswoverland.circleconnect.dagger.Dagger
@@ -32,53 +30,54 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Dagger.getInstance().component().inject(this)
-        setContentView(com.elyseswoverland.circleconnect.R.layout.activity_main)
+        setContentView(R.layout.activity_main)
 
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.add(com.elyseswoverland.circleconnect.R.id.content, MapFragment())
+        fragmentTransaction.add(R.id.content, MapFragment())
         fragmentTransaction.commit()
 
-        Log.d("INTERCEPTOR", "Token: ${appPreferences.token}")
+        supportActionBar?.show()
+        bottom_navigation.selectedItemId = R.id.action_map
 
         bottom_navigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                com.elyseswoverland.circleconnect.R.id.action_map -> {
+                R.id.action_map -> {
                     val fragmentManager = supportFragmentManager
                     val fragmentTransaction = fragmentManager.beginTransaction()
-                    fragmentTransaction.replace(com.elyseswoverland.circleconnect.R.id.content, MapFragment())
+                    fragmentTransaction.replace(R.id.content, MapFragment())
                     fragmentTransaction.commit()
                     true
                 }
-                com.elyseswoverland.circleconnect.R.id.action_favorites -> {
+                R.id.action_favorites -> {
                     val fragmentManager = supportFragmentManager
                     val fragmentTransaction = fragmentManager.beginTransaction()
                     if (appPreferences.hasToken()) {
-                        fragmentTransaction.replace(com.elyseswoverland.circleconnect.R.id.content, FavoritesFragment())
+                        fragmentTransaction.replace(R.id.content, FavoritesFragment())
                     } else {
-                        fragmentTransaction.replace(com.elyseswoverland.circleconnect.R.id.content, LoginFragment())
+                        fragmentTransaction.replace(R.id.content, LoginFragment())
                     }
                     fragmentTransaction.commit()
                     true
                 }
-                com.elyseswoverland.circleconnect.R.id.action_messages -> {
+                R.id.action_messages -> {
                     val fragmentManager = supportFragmentManager
                     val fragmentTransaction = fragmentManager.beginTransaction()
                     if (appPreferences.hasToken()) {
-                        fragmentTransaction.replace(com.elyseswoverland.circleconnect.R.id.content, MessagesFragment())
+                        fragmentTransaction.replace(R.id.content, MessagesFragment())
                     } else {
-                        fragmentTransaction.replace(com.elyseswoverland.circleconnect.R.id.content, LoginFragment())
+                        fragmentTransaction.replace(R.id.content, LoginFragment())
                     }
                     fragmentTransaction.commit()
                     true
                 }
-                com.elyseswoverland.circleconnect.R.id.action_account -> {
+                R.id.action_account -> {
                     val fragmentManager = supportFragmentManager
                     val fragmentTransaction = fragmentManager.beginTransaction()
                     if (appPreferences.hasToken()) {
-                        fragmentTransaction.replace(com.elyseswoverland.circleconnect.R.id.content, AccountFragment())
+                        fragmentTransaction.replace(R.id.content, AccountFragment())
                     } else {
-                        fragmentTransaction.replace(com.elyseswoverland.circleconnect.R.id.content, LoginFragment())
+                        fragmentTransaction.replace(R.id.content, LoginFragment())
                     }
                     fragmentTransaction.commit()
                     true
@@ -90,7 +89,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
-        inflater.inflate(com.elyseswoverland.circleconnect.R.menu.toolbar_menu, menu)
+        inflater.inflate(R.menu.toolbar_menu, menu)
         return  true
     }
 
@@ -101,7 +100,8 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.logout -> {
-                Toast.makeText(this@MainActivity, "Logout", Toast.LENGTH_LONG).show()
+                appPreferences.token = null
+                startActivity(Intent(this, MainActivity::class.java))
                 true
             }
             else -> super.onOptionsItemSelected(item)

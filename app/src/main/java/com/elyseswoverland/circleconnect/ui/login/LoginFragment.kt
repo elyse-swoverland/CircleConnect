@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.elyseswoverland.circleconnect.dagger.Dagger
 import com.elyseswoverland.circleconnect.models.Session
@@ -14,6 +15,7 @@ import com.elyseswoverland.circleconnect.models.SessionRequest
 import com.elyseswoverland.circleconnect.network.CircleConnectApiManager
 import com.elyseswoverland.circleconnect.persistence.AppPreferences
 import com.elyseswoverland.circleconnect.persistence.SessionStorage
+import com.elyseswoverland.circleconnect.ui.MainActivity
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -55,6 +57,8 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        (activity as AppCompatActivity).supportActionBar?.hide()
 
         ctx = context ?: return
 
@@ -141,6 +145,8 @@ class LoginFragment : Fragment() {
 
         appPreferences.token = session.token
         appPreferences.custId = session.customerId
+
+        startActivity(Intent(ctx, MainActivity::class.java))
     }
 
     private fun onAppLoginFailure(throwable: Throwable) {

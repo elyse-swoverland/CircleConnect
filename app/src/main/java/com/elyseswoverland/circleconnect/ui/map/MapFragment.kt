@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.util.Base64
 import android.util.Log
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -84,6 +85,10 @@ class MapFragment : Fragment(), OnMapReadyCallback,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (!(activity as AppCompatActivity).supportActionBar!!.isShowing) {
+            (activity as AppCompatActivity).supportActionBar!!.show()
+        }
 
         setUpRecyclerView()
         ctx = context ?: return
