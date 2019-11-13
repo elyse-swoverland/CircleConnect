@@ -16,7 +16,7 @@
     <item
         android:id="@+id/action_messages"
         android:enabled="true"
-        android:icon="@drawable/outline_mail_outline_black_36dp"
+        android:icon="@drawable/ic_chat_bubble_outline_black_36dp"
         android:title="@string/messages"
         app:showAsAction="ifRoom"/>
     <item

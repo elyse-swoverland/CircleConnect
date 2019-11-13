@@ -27,6 +27,8 @@ data class Merchant(@SerializedName("MerchId")
                     val distanceFromCustomer: Double,
                     @SerializedName("MerchLocation")
                     val merchLocation: MerchLocation,
+                    @SerializedName("MerchMessage")
+                    val merchMessage: MerchMessage?,
                     @SerializedName("Logo")
                     val logo: String? = null,
                     @SerializedName("MerchantRewards")

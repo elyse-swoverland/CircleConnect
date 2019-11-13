@@ -1,7 +1,10 @@
 package com.elyseswoverland.circleconnect.models
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class MerchMessage(@SerializedName("Subject")
                         val subject: String,
                         @SerializedName("Message")
@@ -9,4 +12,4 @@ data class MerchMessage(@SerializedName("Subject")
                         @SerializedName("DateTimeStamp")
                         val timeStamp: String,
                         @SerializedName("MessageStatus")
-                        val messageStatus: String)
+                        val messageStatus: String?) : Parcelable

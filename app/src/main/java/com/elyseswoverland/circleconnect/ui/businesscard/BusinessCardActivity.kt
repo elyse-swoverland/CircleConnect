@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.elyseswoverland.circleconnect.R
@@ -42,12 +43,27 @@ class BusinessCardActivity: AppCompatActivity() {
         businessName.text = merchant.merchName
         address.text = merchant.address
         hours.text = merchant.hours
-        phone.text = merchant.businessPhone
-        contactName.text = merchant.contactName
         distance.text = String.format(getString(R.string.distance_from_customer),
                 merchant.distanceFromCustomer)
         merchant.logo?.let {
             merchantLogo.setImageBitmap(stringToBitmap(it))
+        }
+
+        if (merchant.businessPhone != null) {
+            phone.text = merchant.businessPhone
+        } else {
+            phone.visibility = View.GONE
+        }
+        if (merchant.contactName != null) {
+            contactName.text = merchant.contactName
+        } else {
+            contactName.visibility = View.GONE
+        }
+        if (merchant.merchMessage != null) {
+            merchantMessage.text = merchant.merchMessage!!.message
+        } else {
+            messagesLayout.visibility = View.GONE
+            messagesDivider.visibility = View.GONE
         }
 
         if (merchant.custFavorite) {
