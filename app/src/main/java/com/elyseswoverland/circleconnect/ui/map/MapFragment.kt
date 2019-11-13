@@ -124,7 +124,7 @@ class MapFragment : Fragment(), OnMapReadyCallback,
                 val customInfoWindow = CustomInfoWindow(ctx, merchant)
                 mMap.setInfoWindowAdapter(customInfoWindow)
                 val m = mMap.addMarker(MarkerOptions().position(LatLng(merchant.merchLocation.latitude,
-                        merchant.merchLocation.longitude)).title(merchant.merchName))
+                        merchant.merchLocation.longitude)).title(merchant.merchName).snippet(merchant.description))
                 add(MerchantItem(ctx, merchant, m, callback!!))
             }
         })

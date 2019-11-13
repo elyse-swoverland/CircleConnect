@@ -5,76 +5,30 @@
                 android:layout_height="match_parent"
                 android:padding="2dp">
 
-    <ImageView
-        android:id="@+id/merchantLogo"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:contentDescription="@string/image_logo"/>
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:id="@+id/merchantNameLayout"
-        android:layout_marginBottom="16dp"
-        android:layout_toEndOf="@id/merchantLogo">
+        android:id="@+id/merchantNameLayout">
 
         <TextView
-            android:id="@+id/merchantName"
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
             tools:text="Thr3e Wise Men"/>
 
         <TextView
-            android:id="@+id/merchantAddress"
+            android:id="@+id/description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/black"
             android:textSize="16sp"
             tools:text="11634 Fairgreen Dr"/>
 
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/merchantContactLayout"
-        android:layout_marginStart="16dp"
-        android:layout_below="@+id/merchantNameLayout">
-
-        <TextView
-            android:id="@+id/merchantContact"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16sp"
-            tools:text="Contact: Scott Wise"/>
-
-        <TextView
-            android:id="@+id/merchantPhone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16sp"
-            tools:text="(765) 426-1822"/>
-
-    </LinearLayout>
-
-    <!--<ImageView-->
-    <!--android:id="@+id/favoritesButton"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentEnd="true"-->
-    <!--android:src="@drawable/outline_star_border_black_36dp"-->
-    <!--android:tint="@color/colorAccent"/>-->
 
 </RelativeLayout>

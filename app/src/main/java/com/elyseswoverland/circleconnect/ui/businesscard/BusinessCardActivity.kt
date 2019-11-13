@@ -16,12 +16,23 @@ import com.elyseswoverland.circleconnect.models.Merchant
 import com.elyseswoverland.circleconnect.models.UpdateCustFavoritesRequest
 import com.elyseswoverland.circleconnect.network.CircleConnectApiManager
 import com.elyseswoverland.circleconnect.persistence.AppPreferences
+import com.elyseswoverland.circleconnect.ui.util.CustomInfoWindow
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.*
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_business_card.*
 import rx.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 
-class BusinessCardActivity: AppCompatActivity() {
+class BusinessCardActivity: AppCompatActivity(), OnMapReadyCallback,
+        GoogleMap.OnMarkerClickListener {
     private lateinit var merchant: Merchant
+    private lateinit var mMap: GoogleMap
+    private lateinit var mMapView: MapView
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     @Inject
     lateinit var circleConnectApiManager: CircleConnectApiManager
@@ -39,6 +50,20 @@ class BusinessCardActivity: AppCompatActivity() {
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close_white_24dp)
 
         merchant = intent.getParcelableExtra("MERCHANT")
+
+        mMapView = mapView
+        mMapView.onCreate(savedInstanceState)
+        mMapView.onResume()
+
+        try {
+            MapsInitializer.initialize(applicationContext)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        mMapView.getMapAsync(this)
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         businessName.text = merchant.merchName
         address.text = merchant.address
@@ -83,6 +108,19 @@ class BusinessCardActivity: AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        mMapView.onResume()
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+
+        setupMap(merchant)
+    }
+
+    override fun onMarkerClick(p0: Marker?) = false
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when (item?.itemId) {
             android.R.id.home -> {
@@ -91,6 +129,16 @@ class BusinessCardActivity: AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun setupMap(merchant: Merchant) {
+        val customInfoWindow = CustomInfoWindow(this, merchant)
+        mMap.setInfoWindowAdapter(customInfoWindow)
+        val m = mMap.addMarker(MarkerOptions().position(LatLng(merchant.merchLocation.latitude,
+                merchant.merchLocation.longitude)).title(merchant.merchName).snippet(merchant.description))
+        val currentLatLng = LatLng(merchant.merchLocation.latitude, merchant.merchLocation.longitude)
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18f))
+        m.showInfoWindow()
     }
 
     private fun onUpdateFavoriteSuccess(isFavorite: Boolean) {
