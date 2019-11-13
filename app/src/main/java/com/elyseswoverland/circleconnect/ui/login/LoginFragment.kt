@@ -16,6 +16,9 @@ import com.elyseswoverland.circleconnect.network.CircleConnectApiManager
 import com.elyseswoverland.circleconnect.persistence.AppPreferences
 import com.elyseswoverland.circleconnect.persistence.SessionStorage
 import com.elyseswoverland.circleconnect.ui.MainActivity
+import com.elyseswoverland.circleconnect.ui.util.PRIVACY_POLICY_URL
+import com.elyseswoverland.circleconnect.ui.util.TERMS_URL
+import com.elyseswoverland.circleconnect.ui.util.openUrl
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -88,6 +91,14 @@ class LoginFragment : Fragment() {
         googleLoginButton.setOnClickListener {
             val signInIntent = mGoogleSignInClient.signInIntent
             startActivityForResult(signInIntent, 69)
+        }
+
+        privacyPolicy.setOnClickListener {
+            ctx.openUrl(PRIVACY_POLICY_URL)
+        }
+
+        termsOfUse.setOnClickListener {
+            ctx.openUrl(TERMS_URL)
         }
     }
 
