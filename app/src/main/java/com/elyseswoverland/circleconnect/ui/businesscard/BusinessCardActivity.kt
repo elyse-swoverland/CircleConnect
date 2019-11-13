@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
 import android.view.MenuItem
@@ -95,6 +96,13 @@ class BusinessCardActivity: AppCompatActivity(), OnMapReadyCallback,
             removeFromFavoritesButtonText()
         } else {
             addToFavoritesButtonText()
+        }
+
+        directionsIcon.setOnClickListener {
+            val uri = "http://maps.google.com/maps?q=loc:" + merchant.merchLocation.latitude + "," + merchant.merchLocation.longitude + " (" + merchant.merchName + ")"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+            intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+            startActivity(intent)
         }
 
         favoriteButton.setOnClickListener {

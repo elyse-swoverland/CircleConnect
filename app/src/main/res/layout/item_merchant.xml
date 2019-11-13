@@ -6,14 +6,6 @@
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackground">
 
-    <ImageView
-        android:id="@+id/favoriteButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="8dp"
-        android:src="@drawable/ic_star_gray_36dp"/>
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,7 +13,6 @@
         android:layout_marginStart="16sp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:layout_toEndOf="@+id/favoriteButton"
         android:orientation="vertical">
 
         <TextView
