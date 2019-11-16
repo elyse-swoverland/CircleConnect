@@ -15,7 +15,6 @@ import com.elyseswoverland.circleconnect.ui.util.DatePickerDialogFragment
 import com.elyseswoverland.circleconnect.ui.util.InputUtil
 import kotlinx.android.synthetic.main.fragment_account.*
 import rx.android.schedulers.AndroidSchedulers
-import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
@@ -47,11 +46,7 @@ class AccountFragment : Fragment() {
 
         birthdate.setOnClickListener {
             InputUtil.hideKeyboard(it)
-            val dialogFragment = DatePickerDialogFragment()
-            dialogFragment.maxDate = Calendar.getInstance()
-            dialogFragment.calendar = cal
-            dialogFragment.setDateValidator(null)
-            dialogFragment.setDateFormatter(SimpleDateFormat("M/d", Locale.getDefault()))
+            val dialogFragment = BirthdatePickerDialogFragment()
             dialogFragment.setResultsView(birthdate)
             dialogFragment.show(childFragmentManager.beginTransaction(), DatePickerDialogFragment.TAG)
         }

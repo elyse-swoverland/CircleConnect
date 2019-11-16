@@ -13,7 +13,7 @@
         android:descendantFocusability="blocksDescendants"/>
 
     <NumberPicker
-        android:id="@+id/year_number_picker"
+        android:id="@+id/day_number_picker"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
