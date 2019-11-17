@@ -13,6 +13,7 @@ public class AppPreferences {
     private static final String RECENT_LONG = "RECENT_LONG";
     private static final String SORT_PREF_POSITION = "SORT_PREF_POSITION";
     private static final String DISTANCE_PREF = "DISTANCE_PREF";
+    private static final String MERCH_LOGO = "MERCH_LOGO";
 
     public AppPreferences(SharedPreferences sharedPreferences) {
         this.sharedPreferences = sharedPreferences;
@@ -78,5 +79,13 @@ public class AppPreferences {
 
     public int getDistancePreference() {
         return sharedPreferences.getInt(DISTANCE_PREF, 20);
+    }
+
+    public void setMerchLogo(String logo) {
+        sharedPreferences.edit().putString(MERCH_LOGO, logo).apply();
+    }
+
+    public String getMerchLogo() {
+        return sharedPreferences.getString(MERCH_LOGO, null);
     }
 }

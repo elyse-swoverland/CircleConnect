@@ -120,7 +120,7 @@ class MapFragment : Fragment(), OnMapReadyCallback,
         groupAdapter.clear()
         groupAdapter.add(Section().apply {
             merchants.forEachIndexed { _, merchant ->
-                val customInfoWindow = CustomInfoWindow(ctx, merchant)
+                val customInfoWindow = CustomInfoWindow(ctx)
                 mMap.setInfoWindowAdapter(customInfoWindow)
                 val m = mMap.addMarker(MarkerOptions().position(LatLng(merchant.merchLocation.latitude,
                         merchant.merchLocation.longitude)).title(merchant.merchName).snippet(merchant.description))
@@ -236,7 +236,11 @@ class MapFragment : Fragment(), OnMapReadyCallback,
     }
 
     override fun goToBusinessCard(merchant: Merchant) {
-        startActivity(BusinessCardActivity.newIntent(ctx, merchant))
+        appPreferences.merchLogo = merchant.logo
+        startActivity(BusinessCardActivity.newIntent(ctx, merchant.merchName, merchant.address!!, merchant.hours,
+                merchant.distanceFromCustomer, merchant.businessPhone, merchant.contactName,
+                merchant.merchMessage?.message, merchant.custFavorite, merchant.merchLocation, merchant.merchId,
+                merchant.description))
         activity?.overridePendingTransition(R.anim.slide_up, R.anim.slide_down)
     }
 

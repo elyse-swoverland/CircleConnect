@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.elyseswoverland.circleconnect.R
 import com.elyseswoverland.circleconnect.dagger.Dagger
-import com.elyseswoverland.circleconnect.models.Merchant
+import com.elyseswoverland.circleconnect.models.MerchLocation
 import com.elyseswoverland.circleconnect.models.UpdateCustFavoritesRequest
 import com.elyseswoverland.circleconnect.network.CircleConnectApiManager
 import com.elyseswoverland.circleconnect.persistence.AppPreferences
@@ -30,10 +30,21 @@ import javax.inject.Inject
 
 class BusinessCardActivity: AppCompatActivity(), OnMapReadyCallback,
         GoogleMap.OnMarkerClickListener {
-    private lateinit var merchant: Merchant
     private lateinit var mMap: GoogleMap
     private lateinit var mMapView: MapView
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+    private lateinit var merchName: String
+    private lateinit var merchAddress: String
+    private lateinit var merchHours: String
+    private lateinit var merchDescription: String
+    private lateinit var merchLocation: MerchLocation
+    private var merchId: Int = 0
+    private var merchDistance: Double = 0.0
+    private var merchPhone: String? = null
+    private var merchContactName: String? = null
+    private var merchMessage: String? = null
+    private var custFavorite: Boolean = false
 
     @Inject
     lateinit var circleConnectApiManager: CircleConnectApiManager
@@ -50,7 +61,18 @@ class BusinessCardActivity: AppCompatActivity(), OnMapReadyCallback,
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close_white_24dp)
 
-        merchant = intent.getParcelableExtra("MERCHANT")
+        merchName = intent.getStringExtra("MERCH_NAME")
+        merchAddress = intent.getStringExtra("ADDRESS")
+        merchHours = intent.getStringExtra("HOURS")
+        merchDistance = intent.getDoubleExtra("DISTANCE", 0.0)
+        merchPhone = intent.getStringExtra("PHONE")
+        merchContactName = intent.getStringExtra("CONTACT_NAME")
+        merchMessage = intent.getStringExtra("MESSAGE")
+        custFavorite = intent.getBooleanExtra("CUST_FAVORITE", false)
+        merchLocation = intent.getParcelableExtra("MERCH_LOCATION")
+        merchId = intent.getIntExtra("MERCH_ID", 0)
+        merchDescription = intent.getStringExtra("MERCH_DESCRIPTION")
+
 
         mMapView = mapView
         mMapView.onCreate(savedInstanceState)
@@ -66,52 +88,52 @@ class BusinessCardActivity: AppCompatActivity(), OnMapReadyCallback,
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        businessName.text = merchant.merchName
-        address.text = merchant.address
-        hours.text = merchant.hours
+        businessName.text = merchName
+        address.text = merchAddress
+        hours.text = merchHours
         distance.text = String.format(getString(R.string.distance_from_customer),
-                merchant.distanceFromCustomer)
-        merchant.logo?.let {
+                merchDistance)
+        appPreferences.merchLogo?.let {
             merchantLogo.setImageBitmap(stringToBitmap(it))
         }
 
-        if (merchant.businessPhone != null) {
-            phone.text = merchant.businessPhone
+        if (merchPhone != null) {
+            phone.text = merchPhone
         } else {
             phone.visibility = View.GONE
         }
-        if (merchant.contactName != null) {
-            contactName.text = merchant.contactName
+        if (merchContactName != null) {
+            contactName.text = merchContactName
         } else {
             contactName.visibility = View.GONE
         }
-        if (merchant.merchMessage != null) {
-            merchantMessage.text = merchant.merchMessage!!.message
+        if (merchMessage != null) {
+            merchantMessage.text = merchMessage
         } else {
             messagesLayout.visibility = View.GONE
             messagesDivider.visibility = View.GONE
         }
 
-        if (merchant.custFavorite) {
+        if (custFavorite) {
             removeFromFavoritesButtonText()
         } else {
             addToFavoritesButtonText()
         }
 
         directionsIcon.setOnClickListener {
-            val uri = "http://maps.google.com/maps?q=loc:" + merchant.merchLocation.latitude + "," + merchant.merchLocation.longitude + " (" + merchant.merchName + ")"
+            val uri = "http://maps.google.com/maps?q=loc:" + merchLocation.latitude + "," + merchLocation.longitude + " (" + merchName + ")"
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
             intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
             startActivity(intent)
         }
 
         favoriteButton.setOnClickListener {
-            if (merchant.custFavorite) {
+            if (custFavorite) {
                 addToFavoritesButtonText()
-                updateFavorite(merchant.merchId, false)
+                updateFavorite(merchId, false)
             } else {
                 removeFromFavoritesButtonText()
-                updateFavorite(merchant.merchId, true)
+                updateFavorite(merchId, true)
             }
         }
     }
@@ -124,7 +146,7 @@ class BusinessCardActivity: AppCompatActivity(), OnMapReadyCallback,
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        setupMap(merchant)
+        setupMap(merchLocation, merchName, merchDescription)
     }
 
     override fun onMarkerClick(p0: Marker?) = false
@@ -139,12 +161,12 @@ class BusinessCardActivity: AppCompatActivity(), OnMapReadyCallback,
         }
     }
 
-    private fun setupMap(merchant: Merchant) {
-        val customInfoWindow = CustomInfoWindow(this, merchant)
+    private fun setupMap(merchLocation: MerchLocation, merchName: String, merchDescription: String) {
+        val customInfoWindow = CustomInfoWindow(this)
         mMap.setInfoWindowAdapter(customInfoWindow)
-        val m = mMap.addMarker(MarkerOptions().position(LatLng(merchant.merchLocation.latitude,
-                merchant.merchLocation.longitude)).title(merchant.merchName).snippet(merchant.description))
-        val currentLatLng = LatLng(merchant.merchLocation.latitude, merchant.merchLocation.longitude)
+        val m = mMap.addMarker(MarkerOptions().position(LatLng(merchLocation.latitude,
+                merchLocation.longitude)).title(merchName).snippet(merchDescription))
+        val currentLatLng = LatLng(merchLocation.latitude, merchLocation.longitude)
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18f))
         m.showInfoWindow()
     }
@@ -186,10 +208,23 @@ class BusinessCardActivity: AppCompatActivity(), OnMapReadyCallback,
     }
 
     companion object {
-        fun newIntent(context: Context, merchant: Merchant): Intent {
+        fun newIntent(context: Context, merchName: String, address: String, hours: String,
+                      distance: Double, phone: String?, contactName: String?, message: String?,
+                      custFavorite: Boolean, merchLocation: MerchLocation, merchId: Int, merchDescription: String): Intent {
             val intent = Intent(context, BusinessCardActivity::class.java)
             val args = Bundle()
-            args.putParcelable("MERCHANT", merchant)
+            args.putString("MERCH_NAME", merchName)
+            args.putString("ADDRESS", address)
+            args.putString("HOURS", hours)
+            args.putDouble("DISTANCE", distance)
+            args.putString("PHONE", phone)
+            args.putString("CONTACT_NAME", contactName)
+            args.putString("MESSAGE", message)
+            args.putBoolean("CUST_FAVORITE", custFavorite)
+            args.putParcelable("MERCH_LOCATION", merchLocation)
+            args.putInt("MERCH_ID", merchId)
+            args.putString("MERCH_DESCRIPTION", merchDescription)
+
             intent.putExtras(args)
             return intent
         }

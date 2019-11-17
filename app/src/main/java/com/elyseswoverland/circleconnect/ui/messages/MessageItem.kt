@@ -27,9 +27,9 @@ class MessageItem constructor(private val context: Context,
 
         viewHolder.messageDate.text = formattedDate
 
-        message.merchant.logo?.let {
-            viewHolder.merchantLogo.setImageBitmap(stringToBitmap(message.merchant.logo))
-        }
+//        message.merchant.logo?.let {
+//            viewHolder.merchantLogo.setImageBitmap(stringToBitmap(message.merchant.logo))
+//        }
     }
 
     private fun stringToBitmap(encodedString: String): Bitmap? {

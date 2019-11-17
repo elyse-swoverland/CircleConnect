@@ -6,17 +6,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.elyseswoverland.circleconnect.R;
-import com.elyseswoverland.circleconnect.models.Merchant;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 
 public class CustomInfoWindow implements GoogleMap.InfoWindowAdapter {
     private Context context;
-    private Merchant merchant;
 
-    public CustomInfoWindow(Context ctx, Merchant merchant) {
+    public CustomInfoWindow(Context ctx) {
         context = ctx;
-        this.merchant = merchant;
     }
 
     @Override
