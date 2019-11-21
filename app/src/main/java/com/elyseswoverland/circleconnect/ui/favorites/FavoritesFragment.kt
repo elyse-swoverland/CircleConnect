@@ -16,6 +16,7 @@ import com.elyseswoverland.circleconnect.dagger.Dagger
 import com.elyseswoverland.circleconnect.models.Merchant
 import com.elyseswoverland.circleconnect.network.CircleConnectApiManager
 import com.elyseswoverland.circleconnect.persistence.AppPreferences
+import com.elyseswoverland.circleconnect.ui.businesscard.BusinessCardActivity
 import com.google.android.material.tabs.TabLayout
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Section
@@ -25,8 +26,9 @@ import rx.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 
 
-class FavoritesFragment : Fragment(), TabLayout.OnTabSelectedListener {
+class FavoritesFragment : Fragment(), TabLayout.OnTabSelectedListener, FavoritesCallback {
     private val groupAdapter = GroupAdapter<ViewHolder>()
+    private var callback: FavoritesCallback? = null
     private lateinit var ctx: Context
 
     @Inject lateinit var circleConnectApiManager: CircleConnectApiManager
@@ -47,6 +49,8 @@ class FavoritesFragment : Fragment(), TabLayout.OnTabSelectedListener {
         super.onViewCreated(view, savedInstanceState)
 
         ctx = context ?: return
+
+        this.callback = this
 
         setUpRecyclerView()
 
@@ -98,7 +102,7 @@ class FavoritesFragment : Fragment(), TabLayout.OnTabSelectedListener {
         groupAdapter.clear()
         groupAdapter.add(Section().apply {
             favorites.forEachIndexed { _, merchant ->
-                add(FavoritesItem(ctx, merchant))
+                add(FavoritesItem(ctx, merchant, callback!!))
             }
         })
         favoritesRecyclerview.adapter = groupAdapter
@@ -118,6 +122,15 @@ class FavoritesFragment : Fragment(), TabLayout.OnTabSelectedListener {
 
     override fun onTabReselected(p0: TabLayout.Tab?) {
 
+    }
+
+    override fun goToBusinessCard(merchant: Merchant) {
+        appPreferences.merchLogo = merchant.logo
+        startActivity(BusinessCardActivity.newIntent(ctx, merchant.merchName, merchant.address!!, merchant.hours,
+                merchant.distanceFromCustomer, merchant.businessPhone, merchant.contactName,
+                merchant.merchMessage?.message, merchant.custFavorite, merchant.merchLocation, merchant.merchId,
+                merchant.description))
+        activity?.overridePendingTransition(R.anim.slide_up, R.anim.slide_down)
     }
 
 //    internal class Adapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {

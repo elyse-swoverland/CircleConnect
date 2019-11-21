@@ -10,7 +10,8 @@ import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import kotlinx.android.synthetic.main.item_favorite.*
 
 class FavoritesItem constructor(private val context: Context,
-                                private val merchant: Merchant) : Item() {
+                                private val merchant: Merchant,
+                                private val callback: FavoritesCallback) : Item() {
 
     override fun getLayout(): Int = com.elyseswoverland.circleconnect.R.layout.item_favorite
 
@@ -22,7 +23,9 @@ class FavoritesItem constructor(private val context: Context,
             viewHolder.merchantLogo.setImageBitmap(stringToBitmap(merchant.logo))
         }
 
-
+        viewHolder.infoIcon.setOnClickListener {
+            callback.goToBusinessCard(merchant)
+        }
     }
 
     private fun stringToBitmap(encodedString: String): Bitmap? {
