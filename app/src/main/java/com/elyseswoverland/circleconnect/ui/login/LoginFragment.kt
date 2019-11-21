@@ -22,12 +22,12 @@ import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.GraphRequest
+import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import kotlinx.android.synthetic.main.fragment_login.*
 import rx.android.schedulers.AndroidSchedulers
@@ -78,28 +78,15 @@ class LoginFragment : Fragment() {
         ctx = context ?: return
 
         // Facebook
-        facebookLoginButton.setReadPermissions(Arrays.asList(EMAIL, PUBLIC_PROFILE))
-        facebookLoginButton.fragment = this
-        facebookLoginButton.registerCallback(callbackManager, object: FacebookCallback<LoginResult?> {
-            override fun onSuccess(result: LoginResult?) {
-                setFacebookData(result!!)
-            }
-
-            override fun onCancel() {
-
-            }
-
-            override fun onError(error: FacebookException?) {
-                error!!.printStackTrace()
-            }
-        })
+        fbLoginButton.setOnClickListener {
+            facebookLogin()
+        }
 
         // Google
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build()
         mGoogleSignInClient = GoogleSignIn.getClient(ctx, gso)
-        googleLoginButton.setSize(SignInButton.SIZE_STANDARD)
         googleLoginButton.setOnClickListener {
             val signInIntent = mGoogleSignInClient.signInIntent
             startActivityForResult(signInIntent, 69)
@@ -132,6 +119,23 @@ class LoginFragment : Fragment() {
         parameters.putString("fields", "id, name, first_name, last_name, email, age_range, gender, locale, timezone, updated_time, verified")
         graphRequest.parameters = parameters
         graphRequest.executeAsync()
+    }
+
+    private fun facebookLogin() {
+        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList(EMAIL, PUBLIC_PROFILE))
+        LoginManager.getInstance().registerCallback(callbackManager, object: FacebookCallback<LoginResult?> {
+            override fun onSuccess(result: LoginResult?) {
+                setFacebookData(result!!)
+            }
+
+            override fun onCancel() {
+
+            }
+
+            override fun onError(error: FacebookException?) {
+                error!!.printStackTrace()
+            }
+        })
     }
 
     // Google Sign-in

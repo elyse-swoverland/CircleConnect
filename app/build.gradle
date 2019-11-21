@@ -9,7 +9,7 @@ android {
         applicationId "com.elyseswoverland.circleconnect"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 3
+        versionCode 4
         versionName "1.0.0"
         buildConfigField "okhttp3.logging.HttpLoggingInterceptor.Level", "LOG_LEVEL", "okhttp3.logging.HttpLoggingInterceptor.Level.BODY"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

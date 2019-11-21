@@ -18,9 +18,11 @@ class FavoritesItem constructor(private val context: Context,
         viewHolder.merchantName.text = merchant.merchName
         viewHolder.merchantType.text = merchant.merchType.merchTypeDescription
 
-//        merchant.logo?.let {
-//            viewHolder.merchantLogo.setImageBitmap(stringToBitmap(merchant.logo))
-//        }
+        merchant.logo?.let {
+            viewHolder.merchantLogo.setImageBitmap(stringToBitmap(merchant.logo))
+        }
+
+
     }
 
     private fun stringToBitmap(encodedString: String): Bitmap? {

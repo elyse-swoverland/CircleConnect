@@ -16,6 +16,7 @@ import com.elyseswoverland.circleconnect.ui.login.LoginFragment
 import com.elyseswoverland.circleconnect.ui.map.MapFragment
 import com.elyseswoverland.circleconnect.ui.messages.MessagesFragment
 import com.elyseswoverland.circleconnect.ui.preferences.PreferencesActivity
+import com.facebook.login.LoginManager
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -126,6 +127,7 @@ class MainActivity : AppCompatActivity(), LoginCallback {
             }
             R.id.logout -> {
                 appPreferences.token = null
+                LoginManager.getInstance().logOut()
                 startActivity(Intent(this, MainActivity::class.java))
                 true
             }
