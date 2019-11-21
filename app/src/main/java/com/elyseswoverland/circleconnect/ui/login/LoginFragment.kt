@@ -15,7 +15,6 @@ import com.elyseswoverland.circleconnect.models.SessionRequest
 import com.elyseswoverland.circleconnect.network.CircleConnectApiManager
 import com.elyseswoverland.circleconnect.persistence.AppPreferences
 import com.elyseswoverland.circleconnect.persistence.SessionStorage
-import com.elyseswoverland.circleconnect.ui.MainActivity
 import com.elyseswoverland.circleconnect.ui.util.PRIVACY_POLICY_URL
 import com.elyseswoverland.circleconnect.ui.util.TERMS_URL
 import com.elyseswoverland.circleconnect.ui.util.openUrl
@@ -39,6 +38,8 @@ class LoginFragment : Fragment() {
     private lateinit var callbackManager: CallbackManager
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var ctx: Context
+    private lateinit var loginCallback: LoginCallback
+    private lateinit var callingFragment: String
 
     @Inject
     lateinit var circleConnectApiManager: CircleConnectApiManager
@@ -47,9 +48,20 @@ class LoginFragment : Fragment() {
 
     @Inject lateinit var appPreferences: AppPreferences
 
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        try {
+            loginCallback = context as LoginCallback
+        } catch (e: ClassCastException) {
+            throw java.lang.ClassCastException()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Dagger.getInstance().component().inject(this)
+
+        callingFragment = arguments?.getString("CALLING_FRAGMENT")!!
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -157,7 +169,8 @@ class LoginFragment : Fragment() {
         appPreferences.token = session.token
         appPreferences.custId = session.customerId
 
-        startActivity(Intent(ctx, MainActivity::class.java))
+//        startActivity(Intent(ctx, MainActivity::class.java))
+        loginCallback.loadFullExperience(callingFragment)
     }
 
     private fun onAppLoginFailure(throwable: Throwable) {
@@ -167,5 +180,13 @@ class LoginFragment : Fragment() {
     companion object {
         private const val EMAIL = "email"
         private const val PUBLIC_PROFILE = "public_profile"
+
+        fun newInstance(callingFragment: String): LoginFragment {
+            val loginFragment = LoginFragment()
+            val args = Bundle()
+            args.putString("CALLING_FRAGMENT", callingFragment)
+            loginFragment.arguments = args
+            return loginFragment
+        }
     }
 }

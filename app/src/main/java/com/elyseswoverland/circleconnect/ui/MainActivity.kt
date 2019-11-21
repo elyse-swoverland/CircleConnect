@@ -11,6 +11,7 @@ import com.elyseswoverland.circleconnect.persistence.AppPreferences
 import com.elyseswoverland.circleconnect.persistence.SessionStorage
 import com.elyseswoverland.circleconnect.ui.account.AccountFragment
 import com.elyseswoverland.circleconnect.ui.favorites.FavoritesFragment
+import com.elyseswoverland.circleconnect.ui.login.LoginCallback
 import com.elyseswoverland.circleconnect.ui.login.LoginFragment
 import com.elyseswoverland.circleconnect.ui.map.MapFragment
 import com.elyseswoverland.circleconnect.ui.messages.MessagesFragment
@@ -21,7 +22,7 @@ import javax.inject.Inject
 
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), LoginCallback {
 
     @Inject lateinit var sessionStorage: SessionStorage
 
@@ -55,7 +56,7 @@ class MainActivity : AppCompatActivity() {
                     if (appPreferences.hasToken()) {
                         fragmentTransaction.replace(R.id.content, FavoritesFragment())
                     } else {
-                        fragmentTransaction.replace(R.id.content, LoginFragment())
+                        fragmentTransaction.replace(R.id.content, LoginFragment.newInstance("favorites"))
                     }
                     fragmentTransaction.commit()
                     true
@@ -66,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                     if (appPreferences.hasToken()) {
                         fragmentTransaction.replace(R.id.content, MessagesFragment())
                     } else {
-                        fragmentTransaction.replace(R.id.content, LoginFragment())
+                        fragmentTransaction.replace(R.id.content, LoginFragment.newInstance("messages"))
                     }
                     fragmentTransaction.commit()
                     true
@@ -77,12 +78,36 @@ class MainActivity : AppCompatActivity() {
                     if (appPreferences.hasToken()) {
                         fragmentTransaction.replace(R.id.content, AccountFragment())
                     } else {
-                        fragmentTransaction.replace(R.id.content, LoginFragment())
+                        fragmentTransaction.replace(R.id.content, LoginFragment.newInstance("account"))
                     }
                     fragmentTransaction.commit()
                     true
                 }
                 else -> true
+            }
+        }
+    }
+
+    override fun loadFullExperience(callingFragment: String) {
+        supportActionBar?.show()
+        when (callingFragment) {
+            "favorites" -> {
+                val fragmentManager = supportFragmentManager
+                val fragmentTransaction = fragmentManager.beginTransaction()
+                fragmentTransaction.replace(R.id.content, FavoritesFragment())
+                fragmentTransaction.commit()
+            }
+            "messages" -> {
+                val fragmentManager = supportFragmentManager
+                val fragmentTransaction = fragmentManager.beginTransaction()
+                fragmentTransaction.replace(R.id.content, MessagesFragment())
+                fragmentTransaction.commit()
+            }
+            "account" -> {
+                val fragmentManager = supportFragmentManager
+                val fragmentTransaction = fragmentManager.beginTransaction()
+                fragmentTransaction.replace(R.id.content, AccountFragment())
+                fragmentTransaction.commit()
             }
         }
     }
