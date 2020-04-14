@@ -252,7 +252,6 @@ class MapFragment : Fragment(), OnMapReadyCallback,
             e.message
             null
         }
-
     }
 
     companion object {
